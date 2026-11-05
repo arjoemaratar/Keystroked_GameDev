@@ -133,3 +133,4 @@ func draw_rect_rounded_outline(r: Rect2, radius: float, col: Color, width: float
 	style.border_width_bottom = int(width)
 	style.border_color = col
 	style.draw(get_canvas_item(), r)
+

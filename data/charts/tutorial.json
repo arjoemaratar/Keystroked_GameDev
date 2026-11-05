@@ -5,97 +5,115 @@
   "first_beat_offset_ms": 0,
   "audio": "res://assets/audio/tutorial_music.wav",
   "opponent": "beats",
-  "phrases": [
+  "rows": [
     {
+      "level": 1,
       "phase": "listen",
-      "instruction": "WATCH BEATS: LEFT ARROW [<-]",
-      "prompts": [
-        { "beat": 4.0, "direction": "left" },
-        { "beat": 6.0, "direction": "left" }
+      "instruction": "WATCH BEATS: LEFT ARROWS [<-]",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "left", "type": "Q" },
+        { "dir": "left", "type": "Q" },
+        { "dir": "left", "type": "Q" }
       ]
     },
     {
+      "level": 1,
       "phase": "play",
-      "instruction": "YOUR TURN: PRESS LEFT [<-] OR [A]!",
-      "prompts": [
-        { "beat": 8.0, "direction": "left" },
-        { "beat": 10.0, "direction": "left" }
+      "instruction": "YOUR TURN: PRESS LEFT [<-] OR [A] IN TIME!",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "left", "type": "Q" },
+        { "dir": "left", "type": "Q" },
+        { "dir": "left", "type": "Q" }
       ]
     },
     {
+      "level": 2,
       "phase": "listen",
       "instruction": "WATCH BEATS: DOWN [v] AND UP [^]",
-      "prompts": [
-        { "beat": 12.0, "direction": "down" },
-        { "beat": 14.0, "direction": "up" }
+      "tiles": [
+        { "dir": "down", "type": "Q" },
+        { "dir": "up", "type": "Q" },
+        { "dir": "down", "type": "Q" },
+        { "dir": "up", "type": "Q" }
       ]
     },
     {
+      "level": 2,
       "phase": "play",
       "instruction": "YOUR TURN: DOWN [v] AND UP [^]!",
-      "prompts": [
-        { "beat": 16.0, "direction": "down" },
-        { "beat": 18.0, "direction": "up" }
+      "tiles": [
+        { "dir": "down", "type": "Q" },
+        { "dir": "up", "type": "Q" },
+        { "dir": "down", "type": "Q" },
+        { "dir": "up", "type": "Q" }
       ]
     },
     {
+      "level": 3,
       "phase": "listen",
-      "instruction": "WATCH BEATS: 4-BEAT GROOVE!",
-      "prompts": [
-        { "beat": 20.0, "direction": "left" },
-        { "beat": 21.0, "direction": "down" },
-        { "beat": 22.0, "direction": "up" },
-        { "beat": 23.0, "direction": "right" }
+      "instruction": "WATCH BEATS: 4-WAY ARROW COMBO!",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "down", "type": "Q" },
+        { "dir": "up", "type": "Q" },
+        { "dir": "right", "type": "Q" }
       ]
     },
     {
+      "level": 3,
       "phase": "play",
-      "instruction": "CLAP'S TURN: HIT ALL 4 IN TIME!",
-      "prompts": [
-        { "beat": 24.0, "direction": "left" },
-        { "beat": 25.0, "direction": "down" },
-        { "beat": 26.0, "direction": "up" },
-        { "beat": 27.0, "direction": "right" }
+      "instruction": "CLAP: HIT ALL 4 ARROWS IN ORDER!",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "down", "type": "Q" },
+        { "dir": "up", "type": "Q" },
+        { "dir": "right", "type": "Q" }
       ]
     },
     {
+      "level": 4,
       "phase": "listen",
-      "instruction": "WATCH OUT FOR RESTS! DON'T PRESS!",
-      "prompts": [
-        { "beat": 28.0, "direction": "left" },
-        { "beat": 29.0, "direction": "rest" },
-        { "beat": 30.0, "direction": "right" },
-        { "beat": 31.0, "direction": "rest" }
+      "instruction": "WATCH OUT FOR RESTS! (DON'T PRESS Zz)",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "rest", "type": "R" },
+        { "dir": "right", "type": "Q" },
+        { "dir": "rest", "type": "R" }
       ]
     },
     {
+      "level": 4,
       "phase": "play",
-      "instruction": "DON'T PRESS THE REST Zz!",
-      "prompts": [
-        { "beat": 32.0, "direction": "left" },
-        { "beat": 33.0, "direction": "rest" },
-        { "beat": 34.0, "direction": "right" },
-        { "beat": 35.0, "direction": "rest" }
+      "instruction": "SKIP THE RESTS - DO NOT PRESS!",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "rest", "type": "R" },
+        { "dir": "right", "type": "Q" },
+        { "dir": "rest", "type": "R" }
       ]
     },
     {
+      "level": 5,
       "phase": "listen",
-      "instruction": "BEATS' FINALE COMBO!",
-      "prompts": [
-        { "beat": 36.0, "direction": "left" },
-        { "beat": 37.0, "direction": "up" },
-        { "beat": 38.0, "direction": "down" },
-        { "beat": 39.0, "direction": "right" }
+      "instruction": "BEATS' FINALE: DOUBLE TAPS!",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "down", "type": "E2" },
+        { "dir": "up", "type": "E2" },
+        { "dir": "right", "type": "Q" }
       ]
     },
     {
+      "level": 5,
       "phase": "play",
-      "instruction": "FINISH THE DANCE LESSON!",
-      "prompts": [
-        { "beat": 40.0, "direction": "left" },
-        { "beat": 41.0, "direction": "up" },
-        { "beat": 42.0, "direction": "down" },
-        { "beat": 43.0, "direction": "right" }
+      "instruction": "FINISH THE LESSON WITH STYLE!",
+      "tiles": [
+        { "dir": "left", "type": "Q" },
+        { "dir": "down", "type": "E2" },
+        { "dir": "up", "type": "E2" },
+        { "dir": "right", "type": "Q" }
       ]
     }
   ]

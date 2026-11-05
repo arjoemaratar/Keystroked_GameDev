@@ -6,14 +6,13 @@
   "audio": "res://assets/audio/backing_100bpm.wav",
   "opponent": "The Straight Man",
   "rows": [
-    { "level": 1, "phase": "listen", "tiles": ["Q", "Q", "Q", "Q"] },
-    { "level": 1, "phase": "play",   "tiles": ["Q", "Q", "Q", "Q"] },
-    { "level": 2, "phase": "listen", "tiles": ["Q", "E2", "Q", "E2"] },
-    { "level": 2, "phase": "play",   "tiles": ["Q", "E2", "Q", "E2"] },
-    { "level": 3, "phase": "listen", "tiles": ["E2", "E2", "TR", "Q"] },
-    { "level": 3, "phase": "play",   "tiles": ["E2", "E2", "TR", "Q"] },
-    { "level": 4, "phase": "listen", "tiles": ["ER", "Q", "E2", "Q"] },
-    { "level": 4, "phase": "play",   "tiles": ["ER", "Q", "E2", "Q"] }
+	{ "level": 1, "phase": "listen", "tiles": ["Q", "Q", "Q", "Q"] },
+	{ "level": 1, "phase": "play",   "tiles": ["Q", "Q", "Q", "Q"] },
+	{ "level": 2, "phase": "listen", "tiles": ["Q", "E2", "Q", "E2"] },
+	{ "level": 2, "phase": "play",   "tiles": ["Q", "E2", "Q", "E2"] },
+	{ "level": 3, "phase": "listen", "tiles": ["E2", "E2", "TR", "Q"] },
+	{ "level": 3, "phase": "play",   "tiles": ["E2", "E2", "TR", "Q"] },
+	{ "level": 4, "phase": "listen", "tiles": ["ER", "Q", "E2", "Q"] },
+	{ "level": 4, "phase": "play",   "tiles": ["ER", "Q", "E2", "Q"] }
   ]
 }
-

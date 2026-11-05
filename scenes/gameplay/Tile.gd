@@ -1,42 +1,89 @@
 extends Control
-class_name RhythmTile
 
-@export var tile_id: String = "Q"
-var hits: Array = [0.0]
-var family: String = "straight"
-var symbol: String = "♩"
-var tile_name: String = "Quarter"
-var base_color: Color = Color("#C85A6E")
+var tile_type: String = "Q"
+var primary_dir: String = "left" # "left", "down", "up", "right", "rest"
+var sub_hits: Array = [] # Array of Dictionary { "offset": float, "dir": String }
+var sub_states: Array[int] = [] # 0: pending, 1: hit, 2: missed
+
+var is_active: bool = false
+var is_play_phase: bool = false
+var playhead_progress: float = 0.0 # 0.0 to 1.0 within this beat
+var scale_factor: float = 1.0
+
 var ink_color: Color = Color("#1B1B2F")
 var paper_white: Color = Color("#FFF8E7")
 var hero_yellow: Color = Color("#F7D117")
 
-var is_active: bool = false
-var is_play_phase: bool = false
-var current_sub_progress: float = 0.0 # 0.0 to 1.0 progress through this beat
-var sub_hit_states: Array[int] = [] # 0: pending, 1: hit, 2: missed
+const DIR_COLORS = {
+	"left": Color("#C85A6E"),
+	"down": Color("#4A7DBF"),
+	"up": Color("#4E9A5E"),
+	"right": Color("#D17B4A"),
+	"rest": Color("#9D4EDD")
+}
 
-var scale_factor: float = 1.0
+const TYPE_SYMBOLS = {
+	"Q": "♩",
+	"E2": "♫",
+	"S4": "♬",
+	"TR": "3",
+	"ER": "𝄾♪",
+	"R": "𝄽"
+}
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(100, 110)
+	custom_minimum_size = Vector2(104, 114)
+	size = Vector2(104, 114)
+	pivot_offset = size / 2.0
 
-func setup(id: String, def: Dictionary) -> void:
-	tile_id = id
-	hits = def.get("hits", [0.0])
-	family = def.get("family", "straight")
-	symbol = def.get("symbol", "♩")
-	tile_name = def.get("name", id)
-	base_color = Color(def.get("color", "#C85A6E"))
+func setup(t_type: String, p_dir: String, hits_data: Array = []) -> void:
+	tile_type = t_type
+	primary_dir = p_dir
+	sub_hits.clear()
+	sub_states.clear()
+
+	if hits_data.size() > 0:
+		sub_hits = hits_data.duplicate()
+	else:
+		# Default fallback based on type
+		match tile_type:
+			"E2":
+				sub_hits = [
+					{ "offset": 0.0, "dir": primary_dir },
+					{ "offset": 0.5, "dir": primary_dir }
+				]
+			"TR":
+				sub_hits = [
+					{ "offset": 0.0, "dir": primary_dir },
+					{ "offset": 0.333, "dir": primary_dir },
+					{ "offset": 0.667, "dir": primary_dir }
+				]
+			"S4":
+				sub_hits = [
+					{ "offset": 0.0, "dir": primary_dir },
+					{ "offset": 0.25, "dir": primary_dir },
+					{ "offset": 0.5, "dir": primary_dir },
+					{ "offset": 0.75, "dir": primary_dir }
+				]
+			"ER":
+				sub_hits = [{ "offset": 0.5, "dir": primary_dir }]
+			"R":
+				sub_hits = []
+				primary_dir = "rest"
+			_:
+				sub_hits = [{ "offset": 0.0, "dir": primary_dir }]
+
+	for _h in sub_hits:
+		sub_states.append(0)
+
 	reset_state()
 	queue_redraw()
 
 func reset_state() -> void:
-	sub_hit_states.clear()
-	for _h in hits:
-		sub_hit_states.append(0)
+	for i in range(sub_states.size()):
+		sub_states[i] = 0
 	is_active = false
-	current_sub_progress = 0.0
+	playhead_progress = 0.0
 	scale_factor = 1.0
 	queue_redraw()
 
@@ -45,101 +92,128 @@ func set_active(active: bool, play_phase: bool) -> void:
 	is_play_phase = play_phase
 	if active:
 		var tween = create_tween()
-		scale_factor = 1.08
+		scale_factor = 1.1
 		tween.tween_property(self, "scale_factor", 1.0, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	queue_redraw()
 
 func set_progress(p: float) -> void:
-	current_sub_progress = clampf(p, 0.0, 1.0)
+	playhead_progress = clampf(p, 0.0, 1.0)
 	queue_redraw()
 
 func mark_sub_hit(index: int, rating: String) -> void:
-	if index >= 0 and index < sub_hit_states.size():
-		if rating == "Perfect" or rating == "Good":
-			sub_hit_states[index] = 1
-		else:
-			sub_hit_states[index] = 2
-
+	if index >= 0 and index < sub_states.size():
+		sub_states[index] = 1 if (rating == "Perfect" or rating == "Good") else 2
 		var tween = create_tween()
-		scale_factor = 1.15
-		tween.tween_property(self, "scale_factor", 1.0, 0.12)
+		scale_factor = 1.18
+		tween.tween_property(self, "scale_factor", 1.0, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		queue_redraw()
 
 func pulse_listen(index: int) -> void:
-	if index >= 0 and index < sub_hit_states.size():
-		sub_hit_states[index] = 1
+	if index >= 0 and index < sub_states.size():
+		sub_states[index] = 1
 	var tween = create_tween()
-	scale_factor = 1.12
+	scale_factor = 1.14
 	tween.tween_property(self, "scale_factor", 1.0, 0.12)
 	queue_redraw()
 
 func _draw() -> void:
 	var rect = Rect2(Vector2.ZERO, size)
 	var center = rect.size / 2.0
-	
-	# Apply scale around center
 	draw_set_transform(center * (1.0 - scale_factor), 0.0, Vector2(scale_factor, scale_factor))
 
-	# Paper Cut Pop Drop Shadow (offset down and right 5px, 5px)
+	# Paper Cut Drop Shadow (down & right 5px)
 	var shadow_rect = Rect2(Vector2(5, 5), rect.size)
-	draw_rect_rounded(shadow_rect, 10.0, Color(0.1, 0.1, 0.18, 0.35))
+	draw_rect_rounded(shadow_rect, 12.0, Color(0.1, 0.1, 0.18, 0.35))
 
-	# Tile Background Body
-	var body_color = paper_white
+	# Base card color
+	var dir_col = DIR_COLORS.get(primary_dir, Color("#C85A6E"))
+	var bg_col = paper_white
 	if is_active:
-		body_color = hero_yellow.lerp(paper_white, 0.4)
-	draw_rect_rounded(rect, 10.0, body_color)
+		bg_col = hero_yellow.lerp(paper_white, 0.4)
 
-	# Family Color Top Header Bar
+	draw_rect_rounded(rect, 12.0, bg_col)
+
+	# Direction Header Strip
 	var header_rect = Rect2(0, 0, rect.size.x, 24)
-	draw_rect_rounded_top(header_rect, 10.0, base_color)
+	draw_rect_rounded_top(header_rect, 12.0, dir_col)
 
-	# Thick Paper Cut Outline (3px)
-	var outline_color = ink_color
-	if is_active:
-		outline_color = ink_color
-	draw_rect_rounded_outline(rect, 10.0, outline_color, 3.5)
+	# Thick Paper Cut Outline (3.5px)
+	var outline_col = ink_color
+	draw_rect_rounded_outline(rect, 12.0, outline_col, 3.5)
 
-	# Tile Name in header
+	# Header text: Tile Type & Notation Symbol (e.g. "Q ♩" or "E2 ♫")
 	var font = ThemeDB.fallback_font
-	var font_size = 11
-	var name_pos = Vector2(rect.size.x / 2.0, 16)
-	draw_string(font, name_pos - Vector2(font.get_string_size(tile_id, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size).x / 2.0, 0), tile_id, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, paper_white)
+	var not_sym = TYPE_SYMBOLS.get(tile_type, "♩")
+	var header_str = "%s  %s" % [tile_type, not_sym]
+	var h_size = font.get_string_size(header_str, HORIZONTAL_ALIGNMENT_CENTER, -1, 11)
+	draw_string(font, Vector2((rect.size.x - h_size.x) / 2.0, 16), header_str, HORIZONTAL_ALIGNMENT_CENTER, -1, 11, paper_white)
 
-	# Notation Symbol in center
-	var sym_font_size = 38
-	if symbol.length() > 2:
-		sym_font_size = 24
-	var sym_size = font.get_string_size(symbol, HORIZONTAL_ALIGNMENT_CENTER, -1, sym_font_size)
-	var sym_pos = Vector2((rect.size.x - sym_size.x) / 2.0, 68)
-	draw_string(font, sym_pos, symbol, HORIZONTAL_ALIGNMENT_CENTER, -1, sym_font_size, ink_color)
+	# Center Arrow or Rest Face
+	var center_arrow_pos = Vector2(rect.size.x / 2.0, 62.0)
+	if primary_dir == "rest":
+		draw_rest_face(center_arrow_pos)
+	else:
+		draw_arrow_glyph(center_arrow_pos, primary_dir, dir_col)
 
-	# Sub-beat progress / hit dots at bottom
-	if hits.size() > 0:
-		var dot_y = rect.size.y - 14
-		var dot_radius = 5.0
-		var usable_width = rect.size.x - 24
-		for i in range(hits.size()):
-			var hit_offset = hits[i]
-			var dot_x = 12 + hit_offset * usable_width
+	# Bottom Sub-hit Markers
+	if sub_hits.size() > 1:
+		var dot_y = rect.size.y - 12.0
+		var usable_w = rect.size.x - 24.0
+		for i in range(sub_hits.size()):
+			var h_info = sub_hits[i]
+			var offset_val = float(h_info.get("offset", 0.0))
+			var sub_dir = str(h_info.get("dir", primary_dir))
+			var dot_x = 12.0 + (offset_val * usable_w)
 			var dot_pos = Vector2(dot_x, dot_y)
-			var dot_state = sub_hit_states[i] if i < sub_hit_states.size() else 0
+			var state = sub_states[i] if i < sub_states.size() else 0
 
-			var dot_color = ink_color.lerp(paper_white, 0.5)
-			if dot_state == 1:
-				dot_color = Color("#38B000") # Hit green
-			elif dot_state == 2:
-				dot_color = Color("#D90429") # Miss red
-			elif is_active and current_sub_progress >= hit_offset:
-				dot_color = hero_yellow
+			var dot_col = DIR_COLORS.get(sub_dir, ink_color)
+			if state == 1:
+				dot_col = Color("#38B000")
+			elif state == 2:
+				dot_col = Color("#D90429")
 
-			draw_circle(dot_pos, dot_radius, dot_color)
-			draw_arc(dot_pos, dot_radius, 0, TAU, 16, ink_color, 1.5)
+			draw_circle(dot_pos, 4.5, dot_col)
+			draw_arc(dot_pos, 4.5, 0, TAU, 16, ink_color, 1.5)
 
-	# Active playhead sweep indicator if active
+	# Sweeping Playhead Line
 	if is_active:
-		var sweep_x = rect.size.x * current_sub_progress
-		draw_line(Vector2(sweep_x, 26), Vector2(sweep_x, rect.size.y - 4), hero_yellow, 2.5)
+		var sweep_x = rect.size.x * playhead_progress
+		draw_line(Vector2(sweep_x, 25), Vector2(sweep_x, rect.size.y - 3), hero_yellow, 3.0)
+
+func draw_arrow_glyph(center: Vector2, dir: String, fill_col: Color) -> void:
+	var angle = 0.0
+	match dir:
+		"left": angle = PI
+		"down": angle = PI / 2.0
+		"up": angle = -PI / 2.0
+		"right": angle = 0.0
+
+	var points = PackedVector2Array([
+		Vector2(18, 0),
+		Vector2(-4, -15),
+		Vector2(-4, -7),
+		Vector2(-18, -7),
+		Vector2(-18, 7),
+		Vector2(-4, 7),
+		Vector2(-4, 15)
+	])
+
+	var rotated_pts = PackedVector2Array()
+	for pt in points:
+		rotated_pts.append(center + pt.rotated(angle))
+
+	# Filled arrow with dark outline
+	draw_colored_polygon(rotated_pts, fill_col)
+	draw_polyline(rotated_pts + PackedVector2Array([rotated_pts[0]]), ink_color, 2.5)
+
+func draw_rest_face(center: Vector2) -> void:
+	# Cute sleeping comic face
+	draw_circle(center + Vector2(-8, -4), 3.0, ink_color)
+	draw_circle(center + Vector2(8, -4), 3.0, ink_color)
+	draw_arc(center + Vector2(0, 6), 6.0, 0, PI, 10, ink_color, 2.5)
+	var font = ThemeDB.fallback_font
+	draw_string(font, center + Vector2(-12, -14), "zZ", HORIZONTAL_ALIGNMENT_CENTER, -1, 14, DIR_COLORS["rest"])
 
 func draw_rect_rounded(r: Rect2, radius: float, col: Color) -> void:
 	var style = StyleBoxFlat.new()
@@ -172,4 +246,3 @@ func draw_rect_rounded_outline(r: Rect2, radius: float, col: Color, width: float
 	style.border_width_bottom = int(width)
 	style.border_color = col
 	style.draw(get_canvas_item(), r)
-

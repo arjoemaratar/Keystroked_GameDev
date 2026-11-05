@@ -210,3 +210,4 @@ func draw_arrow_outline(center: Vector2, dir: String, col: Color) -> void:
 		rotated_pts.append(center + pt.rotated(angle))
 
 	draw_polyline(rotated_pts + PackedVector2Array([rotated_pts[0]]), col, 2.5)
+

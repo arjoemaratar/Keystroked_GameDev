@@ -139,3 +139,4 @@ theme_override_font_sizes/font_size = 14
 text = "Controls: Arrow Keys [<- v ^ ->] or [W A S D]"
 horizontal_alignment = 1
 vertical_alignment = 1
+

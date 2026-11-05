@@ -1,67 +1,66 @@
 {
   "Q": {
-    "name": "Quarter",
-    "hits": [0.0],
-    "family": "straight",
-    "color": "#C85A6E",
-    "symbol": "♩",
-    "description": "One quarter note"
+	"name": "Quarter",
+	"hits": [0.0],
+	"family": "straight",
+	"color": "#C85A6E",
+	"symbol": "♩",
+	"description": "One quarter note"
   },
   "E2": {
-    "name": "Two eighths",
-    "hits": [0.0, 0.5],
-    "family": "straight",
-    "color": "#C85A6E",
-    "symbol": "♫",
-    "description": "Two eighth notes"
+	"name": "Two eighths",
+	"hits": [0.0, 0.5],
+	"family": "straight",
+	"color": "#C85A6E",
+	"symbol": "♫",
+	"description": "Two eighth notes"
   },
   "S4": {
-    "name": "Four sixteenths",
-    "hits": [0.0, 0.25, 0.5, 0.75],
-    "family": "straight",
-    "color": "#C85A6E",
-    "symbol": "♬",
-    "description": "Four sixteenth notes"
+	"name": "Four sixteenths",
+	"hits": [0.0, 0.25, 0.5, 0.75],
+	"family": "straight",
+	"color": "#C85A6E",
+	"symbol": "♬",
+	"description": "Four sixteenth notes"
   },
   "TR": {
-    "name": "Triplet",
-    "hits": [0.0, 0.333333, 0.666667],
-    "family": "triplet",
-    "color": "#4A7DBF",
-    "symbol": "3",
-    "description": "Three eighth triplet"
+	"name": "Triplet",
+	"hits": [0.0, 0.333333, 0.666667],
+	"family": "triplet",
+	"color": "#4A7DBF",
+	"symbol": "3",
+	"description": "Three eighth triplet"
   },
   "ER": {
-    "name": "Eighth rest + eighth",
-    "hits": [0.5],
-    "family": "offbeat",
-    "color": "#4E9A5E",
-    "symbol": "𝄾♪",
-    "description": "Rest, then note"
+	"name": "Eighth rest + eighth",
+	"hits": [0.5],
+	"family": "offbeat",
+	"color": "#4E9A5E",
+	"symbol": "𝄾♪",
+	"description": "Rest, then note"
   },
   "SE": {
-    "name": "16th-16th-8th",
-    "hits": [0.0, 0.25, 0.5],
-    "family": "straight",
-    "color": "#C85A6E",
-    "symbol": "♬♩",
-    "description": "Dotted feel"
+	"name": "16th-16th-8th",
+	"hits": [0.0, 0.25, 0.5],
+	"family": "straight",
+	"color": "#C85A6E",
+	"symbol": "♬♩",
+	"description": "Dotted feel"
   },
   "ES": {
-    "name": "8th-16th-16th",
-    "hits": [0.0, 0.5, 0.75],
-    "family": "straight",
-    "color": "#C85A6E",
-    "symbol": "♩♬",
-    "description": "Reverse dotted feel"
+	"name": "8th-16th-16th",
+	"hits": [0.0, 0.5, 0.75],
+	"family": "straight",
+	"color": "#C85A6E",
+	"symbol": "♩♬",
+	"description": "Reverse dotted feel"
   },
   "R": {
-    "name": "Rest",
-    "hits": [],
-    "family": "rest",
-    "color": "#D17B4A",
-    "symbol": "𝄽",
-    "description": "Silent beat"
+	"name": "Rest",
+	"hits": [],
+	"family": "rest",
+	"color": "#D17B4A",
+	"symbol": "𝄽",
+	"description": "Silent beat"
   }
 }
-
