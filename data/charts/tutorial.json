@@ -1,0 +1,102 @@
+{
+  "title": "Beats' Extremely Normal Dance Lesson",
+  "bpm": 90,
+  "time_signature": [4, 4],
+  "first_beat_offset_ms": 0,
+  "audio": "res://assets/audio/tutorial_music.wav",
+  "opponent": "beats",
+  "phrases": [
+    {
+      "phase": "listen",
+      "instruction": "WATCH BEATS: LEFT ARROW [<-]",
+      "prompts": [
+        { "beat": 4.0, "direction": "left" },
+        { "beat": 6.0, "direction": "left" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "YOUR TURN: PRESS LEFT [<-] OR [A]!",
+      "prompts": [
+        { "beat": 8.0, "direction": "left" },
+        { "beat": 10.0, "direction": "left" }
+      ]
+    },
+    {
+      "phase": "listen",
+      "instruction": "WATCH BEATS: DOWN [v] AND UP [^]",
+      "prompts": [
+        { "beat": 12.0, "direction": "down" },
+        { "beat": 14.0, "direction": "up" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "YOUR TURN: DOWN [v] AND UP [^]!",
+      "prompts": [
+        { "beat": 16.0, "direction": "down" },
+        { "beat": 18.0, "direction": "up" }
+      ]
+    },
+    {
+      "phase": "listen",
+      "instruction": "WATCH BEATS: 4-BEAT GROOVE!",
+      "prompts": [
+        { "beat": 20.0, "direction": "left" },
+        { "beat": 21.0, "direction": "down" },
+        { "beat": 22.0, "direction": "up" },
+        { "beat": 23.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "CLAP'S TURN: HIT ALL 4 IN TIME!",
+      "prompts": [
+        { "beat": 24.0, "direction": "left" },
+        { "beat": 25.0, "direction": "down" },
+        { "beat": 26.0, "direction": "up" },
+        { "beat": 27.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "listen",
+      "instruction": "WATCH OUT FOR RESTS! DON'T PRESS!",
+      "prompts": [
+        { "beat": 28.0, "direction": "left" },
+        { "beat": 29.0, "direction": "rest" },
+        { "beat": 30.0, "direction": "right" },
+        { "beat": 31.0, "direction": "rest" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "DON'T PRESS THE REST Zz!",
+      "prompts": [
+        { "beat": 32.0, "direction": "left" },
+        { "beat": 33.0, "direction": "rest" },
+        { "beat": 34.0, "direction": "right" },
+        { "beat": 35.0, "direction": "rest" }
+      ]
+    },
+    {
+      "phase": "listen",
+      "instruction": "BEATS' FINALE COMBO!",
+      "prompts": [
+        { "beat": 36.0, "direction": "left" },
+        { "beat": 37.0, "direction": "up" },
+        { "beat": 38.0, "direction": "down" },
+        { "beat": 39.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "FINISH THE DANCE LESSON!",
+      "prompts": [
+        { "beat": 40.0, "direction": "left" },
+        { "beat": 41.0, "direction": "up" },
+        { "beat": 42.0, "direction": "down" },
+        { "beat": 43.0, "direction": "right" }
+      ]
+    }
+  ]
+}

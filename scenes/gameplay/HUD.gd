@@ -1,7 +1,7 @@
 extends Control
-class_name RhythmHUD
 
 signal retry_requested
+signal menu_requested
 
 @onready var score_label: Label = $TopBar/ScoreBox/ScoreLabel
 @onready var combo_label: Label = $CenterContainer/ComboLabel
@@ -18,7 +18,8 @@ signal retry_requested
 @onready var res_acc_label: Label = $ResultsPanel/MarginContainer/VBox/AccLabel
 @onready var res_score_label: Label = $ResultsPanel/MarginContainer/VBox/ScoreLabel
 @onready var res_combo_label: Label = $ResultsPanel/MarginContainer/VBox/ComboLabel
-@onready var res_retry_btn: Button = $ResultsPanel/MarginContainer/VBox/RetryButton
+@onready var res_retry_btn: Button = $ResultsPanel/MarginContainer/VBox/ButtonsHBox/RetryButton
+@onready var res_menu_btn: Button = $ResultsPanel/MarginContainer/VBox/ButtonsHBox/MenuButton
 
 var hero_yellow: Color = Color("#F7D117")
 var ink_color: Color = Color("#1B1B2F")
@@ -34,6 +35,7 @@ func _ready() -> void:
 	GameState.stats_changed.connect(_on_stats_changed)
 	GameState.player_died.connect(_on_player_died)
 	res_retry_btn.pressed.connect(func(): retry_requested.emit())
+	res_menu_btn.pressed.connect(func(): menu_requested.emit())
 	results_panel.visible = false
 	judgment_label.modulate.a = 0.0
 	offset_label.modulate.a = 0.0
@@ -98,37 +100,34 @@ func show_count_in(number: int) -> void:
 	count_in_tween.tween_property(count_in_label, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	count_in_tween.parallel().tween_property(count_in_label, "modulate:a", 0.0, 0.45).set_delay(0.25)
 
-func set_phase(phase_name: String, level: int = 1) -> void:
-	set_level(level)
-	if phase_name == "listen":
-		phase_banner.text = "LISTEN TO THE RHYTHM"
-		phase_banner.add_theme_color_override("font_color", paper_white)
-	elif phase_name == "play":
-		phase_banner.text = "YOUR TURN: CLAP! [SPACE]"
-		phase_banner.add_theme_color_override("font_color", hero_yellow)
-	elif phase_name == "count_in":
-		phase_banner.text = "GET READY..."
-		phase_banner.add_theme_color_override("font_color", hero_yellow)
-	else:
-		phase_banner.text = phase_name.to_upper()
+func set_instruction(text: String, is_player: bool) -> void:
+	phase_banner.text = text.to_upper()
+	var col = hero_yellow if is_player else paper_white
+	phase_banner.add_theme_color_override("font_color", col)
 
 	var banner_tween = create_tween()
-	phase_banner.scale = Vector2(1.15, 1.15)
-	banner_tween.tween_property(phase_banner, "scale", Vector2.ONE, 0.18)
+	phase_banner.scale = Vector2(1.12, 1.12)
+	banner_tween.tween_property(phase_banner, "scale", Vector2.ONE, 0.15)
 
 func show_judgment(rating: String, offset_ms: float = 0.0) -> void:
-	judgment_label.text = rating.to_upper()
 	var col = hero_yellow
 	match rating:
 		"Perfect":
+			judgment_label.text = "PERFECT!"
 			col = hero_yellow
 			offset_label.text = "%+d ms" % int(offset_ms)
 		"Good":
+			judgment_label.text = "NICE!"
 			col = green_color
 			offset_label.text = "%+d ms" % int(offset_ms)
-		"Miss", "Stray":
+		"Miss":
+			judgment_label.text = "BONK!"
 			col = straight_red
 			offset_label.text = "MISS"
+		"Stray":
+			judgment_label.text = "OOPS!"
+			col = straight_red
+			offset_label.text = "WRONG NOTE"
 
 	judgment_label.add_theme_color_override("font_color", col)
 	offset_label.add_theme_color_override("font_color", col.lerp(paper_white, 0.5))
@@ -141,9 +140,9 @@ func show_judgment(rating: String, offset_ms: float = 0.0) -> void:
 	if judgment_tween and judgment_tween.is_valid():
 		judgment_tween.kill()
 	judgment_tween = create_tween()
-	judgment_tween.tween_property(judgment_label, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	judgment_tween.parallel().tween_property(judgment_label, "modulate:a", 0.0, 0.4).set_delay(0.2)
-	judgment_tween.parallel().tween_property(offset_label, "modulate:a", 0.0, 0.4).set_delay(0.2)
+	judgment_tween.tween_property(judgment_label, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	judgment_tween.parallel().tween_property(judgment_label, "modulate:a", 0.0, 0.35).set_delay(0.25)
+	judgment_tween.parallel().tween_property(offset_label, "modulate:a", 0.0, 0.35).set_delay(0.25)
 
 func show_results(acc: float, rank: String, score_val: int, max_c: int) -> void:
 	results_panel.visible = true

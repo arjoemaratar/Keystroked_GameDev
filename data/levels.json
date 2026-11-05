@@ -1,0 +1,68 @@
+[
+  {
+    "id": "tutorial",
+    "title": "Beats' Normal Dance Lesson",
+    "subtitle": "Prologue",
+    "rival": "Beats",
+    "rival_type": "beats",
+    "concept": "Arrow Basics & Timing",
+    "chart": "res://data/charts/tutorial.json",
+    "bpm": 90,
+    "unlock_req": "Available from start"
+  },
+  {
+    "id": "week1",
+    "title": "Straight Time",
+    "subtitle": "Week 1",
+    "rival": "The Straight Man",
+    "rival_type": "straight_man",
+    "concept": "Quarters & Eighths",
+    "chart": "res://data/charts/week1.json",
+    "bpm": 100,
+    "unlock_req": "Complete Tutorial"
+  },
+  {
+    "id": "week2",
+    "title": "Swing Shuffle",
+    "subtitle": "Week 2",
+    "rival": "Swing Queen",
+    "rival_type": "straight_man",
+    "concept": "Triplets & Shuffle",
+    "chart": "res://data/charts/week1.json",
+    "bpm": 110,
+    "unlock_req": "Complete Week 1"
+  },
+  {
+    "id": "week3",
+    "title": "Syncopated Chaos",
+    "subtitle": "Week 3",
+    "rival": "The Syncopator",
+    "rival_type": "straight_man",
+    "concept": "Off-beats & Rests",
+    "chart": "res://data/charts/week1.json",
+    "bpm": 120,
+    "unlock_req": "Complete Week 2"
+  },
+  {
+    "id": "week4",
+    "title": "Twin Polyrhythm",
+    "subtitle": "Week 4",
+    "rival": "The Twins",
+    "rival_type": "straight_man",
+    "concept": "3-against-4 Polyrhythm",
+    "chart": "res://data/charts/week1.json",
+    "bpm": 125,
+    "unlock_req": "Complete Week 3"
+  },
+  {
+    "id": "finale",
+    "title": "The Master Clock",
+    "subtitle": "Finale",
+    "rival": "The Metronome",
+    "rival_type": "straight_man",
+    "concept": "Human Groove vs Quantization",
+    "chart": "res://data/charts/week1.json",
+    "bpm": 130,
+    "unlock_req": "Complete Week 4"
+  }
+]

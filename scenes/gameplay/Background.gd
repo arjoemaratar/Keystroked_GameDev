@@ -64,3 +64,4 @@ func _draw() -> void:
 	# Decorative paper dashed rhythm road line
 	for rx in range(20, int(size.x), 50):
 		draw_line(Vector2(rx, size.y - 42), Vector2(rx + 28, size.y - 42), paper_white.lerp(dark_navy, 0.6), 3.0)
+

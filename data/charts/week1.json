@@ -1,0 +1,102 @@
+{
+  "title": "Straight Time",
+  "bpm": 100,
+  "time_signature": [4, 4],
+  "first_beat_offset_ms": 0,
+  "audio": "res://assets/audio/backing_100bpm.wav",
+  "opponent": "straight_man",
+  "phrases": [
+    {
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: PRECISE QUARTERS",
+      "prompts": [
+        { "beat": 4.0, "direction": "left" },
+        { "beat": 5.0, "direction": "down" },
+        { "beat": 6.0, "direction": "up" },
+        { "beat": 7.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "CLAP: MATCH HIS TIMING!",
+      "prompts": [
+        { "beat": 8.0, "direction": "left" },
+        { "beat": 9.0, "direction": "down" },
+        { "beat": 10.0, "direction": "up" },
+        { "beat": 11.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: EIGHTH NOTES INCOMING",
+      "prompts": [
+        { "beat": 12.0, "direction": "left" },
+        { "beat": 12.5, "direction": "left" },
+        { "beat": 13.0, "direction": "up" },
+        { "beat": 14.0, "direction": "down" },
+        { "beat": 14.5, "direction": "right" },
+        { "beat": 15.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "YOUR TURN: DOUBLE TAPS!",
+      "prompts": [
+        { "beat": 16.0, "direction": "left" },
+        { "beat": 16.5, "direction": "left" },
+        { "beat": 17.0, "direction": "up" },
+        { "beat": 18.0, "direction": "down" },
+        { "beat": 18.5, "direction": "right" },
+        { "beat": 19.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: ALTERNATING PATTERN",
+      "prompts": [
+        { "beat": 20.0, "direction": "up" },
+        { "beat": 20.5, "direction": "down" },
+        { "beat": 21.0, "direction": "up" },
+        { "beat": 22.0, "direction": "left" },
+        { "beat": 22.5, "direction": "right" },
+        { "beat": 23.0, "direction": "left" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "ANSWER WITH YOUR GROOVE!",
+      "prompts": [
+        { "beat": 24.0, "direction": "up" },
+        { "beat": 24.5, "direction": "down" },
+        { "beat": 25.0, "direction": "up" },
+        { "beat": 26.0, "direction": "left" },
+        { "beat": 26.5, "direction": "right" },
+        { "beat": 27.0, "direction": "left" }
+      ]
+    },
+    {
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: GRAND FINALE!",
+      "prompts": [
+        { "beat": 28.0, "direction": "left" },
+        { "beat": 28.5, "direction": "down" },
+        { "beat": 29.0, "direction": "up" },
+        { "beat": 29.5, "direction": "right" },
+        { "beat": 30.0, "direction": "left" },
+        { "beat": 31.0, "direction": "right" }
+      ]
+    },
+    {
+      "phase": "play",
+      "instruction": "PROVE HUMAN GROOVE BEATS PERFECT!",
+      "prompts": [
+        { "beat": 32.0, "direction": "left" },
+        { "beat": 32.5, "direction": "down" },
+        { "beat": 33.0, "direction": "up" },
+        { "beat": 33.5, "direction": "right" },
+        { "beat": 34.0, "direction": "left" },
+        { "beat": 35.0, "direction": "right" }
+      ]
+    }
+  ]
+}
