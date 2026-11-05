@@ -115,13 +115,59 @@ func build_level_cards() -> void:
 
 		# Play / Locked Button
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(0, 42)
+		btn.custom_minimum_size = Vector2(0, 44)
 		if is_unlocked:
-			btn.text = "PLAY"
+			btn.text = "PLAY STAGE"
+			var normal_style = StyleBoxFlat.new()
+			normal_style.bg_color = Color("#F7D117")
+			normal_style.border_color = Color("#1B1B2F")
+			normal_style.border_width_left = 3
+			normal_style.border_width_top = 3
+			normal_style.border_width_right = 3
+			normal_style.border_width_bottom = 3
+			normal_style.corner_radius_top_left = 8
+			normal_style.corner_radius_top_right = 8
+			normal_style.corner_radius_bottom_right = 8
+			normal_style.corner_radius_bottom_left = 8
+			normal_style.shadow_color = Color(0.1, 0.1, 0.18, 0.4)
+			normal_style.shadow_size = 4
+			normal_style.shadow_offset = Vector2(2, 3)
+
+			var hover_style = normal_style.duplicate()
+			hover_style.bg_color = Color("#FFF8E7")
+
+			var pressed_style = normal_style.duplicate()
+			pressed_style.bg_color = Color("#E5BF00")
+
+			btn.add_theme_stylebox_override("normal", normal_style)
+			btn.add_theme_stylebox_override("hover", hover_style)
+			btn.add_theme_stylebox_override("pressed", pressed_style)
+			btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+
+			btn.add_theme_color_override("font_color", Color("#1B1B2F"))
+			btn.add_theme_color_override("font_hover_color", Color("#1B1B2F"))
+			btn.add_theme_color_override("font_pressed_color", Color("#1B1B2F"))
+			btn.add_theme_color_override("font_focus_color", Color("#1B1B2F"))
+			btn.add_theme_font_size_override("font_size", 16)
 			btn.pressed.connect(func(): _start_level(lvl_id))
 		else:
 			btn.text = "LOCKED"
 			btn.disabled = true
+			var dis_style = StyleBoxFlat.new()
+			dis_style.bg_color = Color("#262638")
+			dis_style.border_color = Color("#44445A")
+			dis_style.border_width_left = 2
+			dis_style.border_width_top = 2
+			dis_style.border_width_right = 2
+			dis_style.border_width_bottom = 2
+			dis_style.corner_radius_top_left = 8
+			dis_style.corner_radius_top_right = 8
+			dis_style.corner_radius_bottom_right = 8
+			dis_style.corner_radius_bottom_left = 8
+			btn.add_theme_stylebox_override("disabled", dis_style)
+			btn.add_theme_color_override("font_disabled_color", Color("#888899"))
+			btn.add_theme_font_size_override("font_size", 15)
+
 			var tip = Label.new()
 			tip.text = lvl.get("unlock_req", "Locked")
 			tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -139,4 +185,3 @@ func _start_level(level_id: String) -> void:
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/menus/MainMenu.tscn")
-

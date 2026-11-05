@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scenes/menus/LevelSelect.gd" id="1_lvl"]
 [ext_resource type="Script" path="res://scenes/gameplay/Background.gd" id="2_bg"]
@@ -7,6 +7,50 @@
 bg_color = Color(0.105882, 0.105882, 0.184314, 0.9)
 border_width_bottom = 3
 border_color = Color(0.968627, 0.819608, 0.0901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_back_normal"]
+bg_color = Color(0.968627, 0.819608, 0.0901961, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.105882, 0.105882, 0.184314, 0.4)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_back_hover"]
+bg_color = Color(1, 0.972549, 0.905882, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.105882, 0.105882, 0.184314, 0.5)
+shadow_size = 4
+shadow_offset = Vector2(2, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_back_pressed"]
+bg_color = Color(0.898039, 0.74902, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 
 [node name="LevelSelect" type="Control"]
 layout_mode = 3
@@ -41,10 +85,19 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 24.0
-offset_top = -20.0
-offset_right = 154.0
-offset_bottom = 20.0
+offset_top = -22.0
+offset_right = 164.0
+offset_bottom = 22.0
 grow_vertical = 2
+theme_override_colors/font_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_pressed_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_hover_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_focus_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_back_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_back_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_back_pressed")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
 text = "< MAIN MENU"
 
 [node name="HeaderLabel" type="Label" parent="TopBar"]
@@ -87,4 +140,3 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 alignment = 1
-

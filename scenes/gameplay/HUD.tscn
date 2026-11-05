@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scenes/gameplay/HUD.gd" id="1_hud"]
 
@@ -40,6 +40,68 @@ corner_radius_bottom_left = 16
 shadow_color = Color(0, 0, 0, 0.45)
 shadow_size = 12
 shadow_offset = Vector2(6, 6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_yellow_norm"]
+bg_color = Color(0.968627, 0.819608, 0.0901961, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.105882, 0.105882, 0.184314, 0.4)
+shadow_size = 4
+shadow_offset = Vector2(2, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_yellow_hov"]
+bg_color = Color(1, 0.972549, 0.905882, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.105882, 0.105882, 0.184314, 0.5)
+shadow_size = 5
+shadow_offset = Vector2(3, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_white_norm"]
+bg_color = Color(1, 0.972549, 0.905882, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.105882, 0.105882, 0.184314, 0.4)
+shadow_size = 4
+shadow_offset = Vector2(2, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_white_hov"]
+bg_color = Color(0.968627, 0.819608, 0.0901961, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.184314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.105882, 0.105882, 0.184314, 0.5)
+shadow_size = 5
+shadow_offset = Vector2(3, 4)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -314,15 +376,27 @@ theme_override_constants/separation = 16
 alignment = 1
 
 [node name="RetryButton" type="Button" parent="ResultsPanel/MarginContainer/VBox/ButtonsHBox"]
-custom_minimum_size = Vector2(140, 42)
+custom_minimum_size = Vector2(140, 44)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_pressed_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_hover_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_focus_color = Color(0.105882, 0.105882, 0.184314, 1)
 theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_yellow_norm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_yellow_hov")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
 text = "RETRY"
 
 [node name="MenuButton" type="Button" parent="ResultsPanel/MarginContainer/VBox/ButtonsHBox"]
-custom_minimum_size = Vector2(140, 42)
+custom_minimum_size = Vector2(140, 44)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_pressed_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_hover_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_focus_color = Color(0.105882, 0.105882, 0.184314, 1)
 theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_white_norm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_white_hov")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
 text = "LEVEL SELECT"
