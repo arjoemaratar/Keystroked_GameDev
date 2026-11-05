@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/Song.gd" id="1_song"]
+[ext_resource type="Script" path="res://scenes/gameplay/Background.gd" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/HUD.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/PatternGrid.tscn" id="4_grid"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Character.tscn" id="5_char"]
+
+[node name="Song" type="Node2D"]
+script = ExtResource("1_song")
+
+[node name="Background" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("2_bg")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PatternGrid" parent="CanvasLayer" instance=ExtResource("4_grid")]
+mouse_filter = 2
+
+[node name="OpponentChar" parent="CanvasLayer" instance=ExtResource("5_char")]
+offset_left = 70.0
+offset_top = 370.0
+offset_right = 230.0
+offset_bottom = 570.0
+character_type = "straight_man"
+character_name = "The Straight Man"
+
+[node name="PlayerChar" parent="CanvasLayer" instance=ExtResource("5_char")]
+offset_left = 1050.0
+offset_top = 370.0
+offset_right = 1210.0
+offset_bottom = 570.0
+character_type = "clap"
+character_name = "Clap"
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("3_hud")]

@@ -1,0 +1,317 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/HUD.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_top"]
+bg_color = Color(0.105882, 0.105882, 0.184314, 0.85)
+border_width_bottom = 3
+border_color = Color(0.968627, 0.819608, 0.0901961, 1)
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 4
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_bg"]
+bg_color = Color(0.18, 0.18, 0.28, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.305882, 0.603922, 0.368627, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_results"]
+bg_color = Color(0.105882, 0.105882, 0.184314, 0.95)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.968627, 0.819608, 0.0901961, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 12
+shadow_offset = Vector2(6, 6)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_hud")
+
+[node name="TopBar" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_right = -20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_top")
+
+[node name="ScoreBox" type="HBoxContainer" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = -14.0
+offset_right = 224.0
+offset_bottom = 14.0
+grow_vertical = 2
+
+[node name="ScoreLabel" type="Label" parent="TopBar/ScoreBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.819608, 0.0901961, 1)
+theme_override_font_sizes/font_size = 20
+text = "SCORE: 000000"
+
+[node name="LevelBox" type="HBoxContainer" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -14.0
+offset_right = 100.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LevelText" type="Label" parent="TopBar/LevelBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.972549, 0.905882, 1)
+theme_override_font_sizes/font_size = 16
+text = "LEVEL  "
+
+[node name="BoxesContainer" type="HBoxContainer" parent="TopBar/LevelBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="HealthBox" type="HBoxContainer" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -12.0
+offset_right = -24.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="HealthLabel" type="Label" parent="TopBar/HealthBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.972549, 0.905882, 1)
+theme_override_font_sizes/font_size = 14
+text = "HP"
+
+[node name="HealthBar" type="ProgressBar" parent="TopBar/HealthBox"]
+custom_minimum_size = Vector2(180, 16)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+value = 100.0
+show_percentage = false
+
+[node name="PhaseBanner" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 75.0
+offset_right = 300.0
+offset_bottom = 110.0
+grow_horizontal = 2
+pivot_offset = Vector2(300, 17)
+theme_override_colors/font_color = Color(0.968627, 0.819608, 0.0901961, 1)
+theme_override_font_sizes/font_size = 22
+text = "GET READY..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CountInLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(60, 60)
+theme_override_colors/font_color = Color(0.968627, 0.819608, 0.0901961, 1)
+theme_override_colors/font_outline_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 90
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JudgmentContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 180.0
+offset_right = 150.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 35)
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="JudgmentLabel" type="Label" parent="JudgmentContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.819608, 0.0901961, 1)
+theme_override_colors/font_outline_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "PERFECT!"
+horizontal_alignment = 1
+
+[node name="OffsetLabel" type="Label" parent="JudgmentContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.972549, 0.905882, 1)
+theme_override_font_sizes/font_size = 16
+text = "+12 ms"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -60.0
+offset_right = -30.0
+offset_bottom = 60.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ComboLabel" type="Label" parent="CenterContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(95, 60)
+theme_override_colors/font_color = Color(0.968627, 0.819608, 0.0901961, 1)
+theme_override_colors/font_outline_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "5 COMBO!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResultsPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -180.0
+offset_right = 220.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(220, 180)
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_results")
+
+[node name="MarginContainer" type="MarginContainer" parent="ResultsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 25
+
+[node name="VBox" type="VBoxContainer" parent="ResultsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.972549, 0.905882, 1)
+theme_override_font_sizes/font_size = 20
+text = "SONG COMPLETE!"
+horizontal_alignment = 1
+
+[node name="RankLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.968627, 0.819608, 0.0901961, 1)
+theme_override_colors/font_outline_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 46
+text = "RANK: S"
+horizontal_alignment = 1
+
+[node name="AccLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.972549, 0.905882, 1)
+theme_override_font_sizes/font_size = 18
+text = "ACCURACY: 98.5%"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.972549, 0.905882, 1)
+theme_override_font_sizes/font_size = 18
+text = "FINAL SCORE: 4800"
+horizontal_alignment = 1
+
+[node name="ComboLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.972549, 0.905882, 1)
+theme_override_font_sizes/font_size = 18
+text = "MAX COMBO: 16"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="ResultsPanel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="RetryButton" type="Button" parent="ResultsPanel/MarginContainer/VBox"]
+custom_minimum_size = Vector2(160, 42)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_font_sizes/font_size = 18
+text = "PLAY AGAIN"
