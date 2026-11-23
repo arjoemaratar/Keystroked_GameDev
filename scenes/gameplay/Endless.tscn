@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/gameplay/Song.tscn" id="1_song"]
+[ext_resource type="Script" path="res://scenes/gameplay/EndlessSong.gd" id="2_endless"]
+
+[node name="Endless" instance=ExtResource("1_song")]
+script = ExtResource("2_endless")

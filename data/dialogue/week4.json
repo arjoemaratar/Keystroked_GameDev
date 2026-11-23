@@ -1,0 +1,76 @@
+{
+  "intro": [
+    {
+      "speaker": "Narrator",
+      "text": "The Twins' Clock Shop. Tri and Quad always played together. But the Metronome ticked them differently: Tri can only count in 3, and Quad can only count in 4."
+    },
+    {
+      "speaker": "Tri",
+      "text": "One, two, three! One, two, three!",
+      "pose": "left"
+    },
+    {
+      "speaker": "Quad",
+      "text": "One, two, three, four! You're doing it wrong!",
+      "pose": "right"
+    },
+    {
+      "speaker": "Tri",
+      "text": "YOU'RE doing it wrong!",
+      "pose": "down",
+      "shake": true,
+      "shot": "close"
+    },
+    {
+      "speaker": "Beats",
+      "text": "They're both ticked, and they're stuck fighting each other. You'll have to copy both rhythms at once."
+    },
+    {
+      "speaker": "Clap",
+      "text": "Two rhythms. At the same time. Sure. Totally normal Tuesday.",
+      "pose": "shock"
+    }
+  ],
+  "win": [
+    {
+      "speaker": "Clap",
+      "text": "Look, 3 and 4 both fit into 12. You were never really out of sync. You were playing a pattern together.",
+      "pose": "up"
+    },
+    {
+      "speaker": "Tri",
+      "text": "So we were..."
+    },
+    {
+      "speaker": "Quad",
+      "text": "...both right?"
+    },
+    {
+      "speaker": "Tri",
+      "text": "Hey, I can count to four now!",
+      "pose": "cheer",
+      "flash": "#D17B4A"
+    },
+    {
+      "speaker": "Quad",
+      "text": "And I can count to three! Clap, go stop that tower. We'll be right behind you."
+    }
+  ],
+  "lose": [
+    {
+      "speaker": "Quad",
+      "text": "Off by one! Or by two! We can't agree which!"
+    }
+  ],
+  "taunts": {
+    "miss": [
+      "Wrong count! And the other wrong count!",
+      "We both saw that.",
+      "Even WE agree that was bad."
+    ],
+    "streak": [
+      "Is it three or four? Don't tell us!",
+      "Our loops are slipping!"
+    ]
+  }
+}

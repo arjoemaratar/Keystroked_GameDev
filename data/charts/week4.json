@@ -1,0 +1,704 @@
+{
+  "title": "Twin Polyrhythm",
+  "bpm": 125,
+  "time_signature": [
+    4,
+    4
+  ],
+  "first_beat_offset_ms": 0,
+  "sfx_key": 2,
+  "audio": "res://assets/audio/music_week4.wav",
+  "opponent": "twins",
+  "rows": [
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "QUAD: FOUR STRAIGHT TICKS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "CLAP: MATCH QUAD!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "QUAD: FOUR STRAIGHT TICKS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "BOTH CLOCKS!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "QUAD: FOUR STRAIGHT TICKS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "GEARS LOCKED IN!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "TRI: NOW THREES, THEN TWOS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "CLAP: SWITCH BETWEEN THEM!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "TRI: NOW THREES, THEN TWOS",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "GEARS LOCKED IN!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "TRI: NOW THREES, THEN TWOS",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "THREE! FOUR! THREE!",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE TWINS: GEARS TURNING",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "CLAP: KEEP BOTH CLOCKS!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE TWINS: GEARS TURNING",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "THREE! FOUR! THREE!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE TWINS: GEARS TURNING",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "BOTH CLOCKS!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE TWINS: THREE AGAINST FOUR",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "CLAP: DON'T LOSE COUNT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE TWINS: THREE AGAINST FOUR",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "BOTH CLOCKS!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE TWINS: THREE AGAINST FOUR",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "GEARS LOCKED IN!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE TWINS: CLOCKWORK FRENZY",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "S4"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "WAKE THEM BOTH!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "S4"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE TWINS: CLOCKWORK FRENZY",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "GEARS LOCKED IN!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE TWINS: CLOCKWORK FRENZY",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "THREE! FOUR! THREE!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    }
+  ]
+}

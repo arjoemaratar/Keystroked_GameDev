@@ -1,9 +1,13 @@
 {
   "title": "Beats' Extremely Normal Dance Lesson",
   "bpm": 90,
-  "time_signature": [4, 4],
+  "time_signature": [
+    4,
+    4
+  ],
   "first_beat_offset_ms": 0,
-  "audio": "res://assets/audio/tutorial_music.wav",
+  "sfx_key": 0,
+  "audio": "res://assets/audio/music_tutorial.wav",
   "opponent": "beats",
   "rows": [
     {
@@ -11,10 +15,22 @@
       "phase": "listen",
       "instruction": "WATCH BEATS: LEFT ARROWS [<-]",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "left", "type": "Q" },
-        { "dir": "left", "type": "Q" },
-        { "dir": "left", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -22,10 +38,68 @@
       "phase": "play",
       "instruction": "YOUR TURN: PRESS LEFT [<-] OR [A] IN TIME!",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "left", "type": "Q" },
-        { "dir": "left", "type": "Q" },
-        { "dir": "left", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "WATCH BEATS: LEFT ARROWS [<-]",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "YOU GOT THIS!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -33,10 +107,22 @@
       "phase": "listen",
       "instruction": "WATCH BEATS: DOWN [v] AND UP [^]",
       "tiles": [
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" }
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -44,10 +130,68 @@
       "phase": "play",
       "instruction": "YOUR TURN: DOWN [v] AND UP [^]!",
       "tiles": [
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" }
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "WATCH BEATS: DOWN [v] AND UP [^]",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "FEEL THE BEAT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -55,10 +199,22 @@
       "phase": "listen",
       "instruction": "WATCH BEATS: 4-WAY ARROW COMBO!",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -66,10 +222,68 @@
       "phase": "play",
       "instruction": "CLAP: HIT ALL 4 ARROWS IN ORDER!",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "WATCH BEATS: 4-WAY ARROW COMBO!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "AGAIN! NICE AND STEADY!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -77,10 +291,22 @@
       "phase": "listen",
       "instruction": "WATCH OUT FOR RESTS! (DON'T PRESS Zz)",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "rest", "type": "R" },
-        { "dir": "right", "type": "Q" },
-        { "dir": "rest", "type": "R" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        }
       ]
     },
     {
@@ -88,10 +314,68 @@
       "phase": "play",
       "instruction": "SKIP THE RESTS - DO NOT PRESS!",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "rest", "type": "R" },
-        { "dir": "right", "type": "Q" },
-        { "dir": "rest", "type": "R" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "WATCH OUT FOR RESTS! (DON'T PRESS Zz)",
+      "tiles": [
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "YOU GOT THIS!",
+      "tiles": [
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -99,10 +383,22 @@
       "phase": "listen",
       "instruction": "BEATS' FINALE: DOUBLE TAPS!",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "down", "type": "E2" },
-        { "dir": "up", "type": "E2" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -110,10 +406,68 @@
       "phase": "play",
       "instruction": "FINISH THE LESSON WITH STYLE!",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "down", "type": "E2" },
-        { "dir": "up", "type": "E2" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "BEATS' FINALE: DOUBLE TAPS!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "FEEL THE BEAT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
       ]
     }
   ]

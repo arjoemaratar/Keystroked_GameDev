@@ -113,7 +113,7 @@ layout_mode = 2
 
 [node name="ButtonsVBox" type="VBoxContainer" parent="VBoxContainer" unique_id=759265666]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 10
 alignment = 1
 
 [node name="BtnPlay" type="Button" parent="VBoxContainer/ButtonsVBox" unique_id=397226472]
@@ -160,6 +160,36 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
 text = "LEVEL SELECT"
+
+[node name="BtnEndless" type="Button" parent="VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(300, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_focus_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_pressed_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_hover_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+text = "ENDLESS MODE"
+
+[node name="BtnSettings" type="Button" parent="VBoxContainer/ButtonsVBox"]
+custom_minimum_size = Vector2(300, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_focus_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_pressed_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_colors/font_hover_color = Color(0.105882, 0.105882, 0.184314, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_focus")
+text = "SETTINGS"
 
 [node name="BtnQuit" type="Button" parent="VBoxContainer/ButtonsVBox" unique_id=2112351672]
 custom_minimum_size = Vector2(300, 52)

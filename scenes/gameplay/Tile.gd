@@ -1,5 +1,7 @@
 extends Control
 
+const TileDefs = preload("res://scenes/gameplay/TileDefs.gd")
+
 var tile_type: String = "Q"
 var primary_dir: String = "left" # "left", "down", "up", "right", "rest"
 var sub_hits: Array = [] # Array of Dictionary { "offset": float, "dir": String }
@@ -16,6 +18,13 @@ var hit_flash_alpha: float = 0.0
 var pop_ring_radius: float = 0.0
 var pop_ring_alpha: float = 0.0
 var idle_anim_time: float = 0.0
+
+# Press cues from Song.gd: Array of { sub: int, remain: float, dir: String }.
+# remain is 1.0 when the cue appears, 0.0 exactly when to press, negative = late.
+var cues: Array = []
+const CUE_TARGET_RADIUS: float = 25.0
+const CUE_START_RADIUS: float = 58.0
+const CUE_NOW_BAND: float = 0.07 # |remain| below this shows the NOW flash
 
 var ink_color: Color = Color("#1B1B2F")
 var paper_white: Color = Color("#FFF8E7")
@@ -56,32 +65,11 @@ func setup(t_type: String, p_dir: String, hits_data: Array = []) -> void:
 	if hits_data.size() > 0:
 		sub_hits = hits_data.duplicate()
 	else:
-		match tile_type:
-			"E2":
-				sub_hits = [
-					{ "offset": 0.0, "dir": primary_dir },
-					{ "offset": 0.5, "dir": primary_dir }
-				]
-			"TR":
-				sub_hits = [
-					{ "offset": 0.0, "dir": primary_dir },
-					{ "offset": 0.333, "dir": primary_dir },
-					{ "offset": 0.667, "dir": primary_dir }
-				]
-			"S4":
-				sub_hits = [
-					{ "offset": 0.0, "dir": primary_dir },
-					{ "offset": 0.25, "dir": primary_dir },
-					{ "offset": 0.5, "dir": primary_dir },
-					{ "offset": 0.75, "dir": primary_dir }
-				]
-			"ER":
-				sub_hits = [{ "offset": 0.5, "dir": primary_dir }]
-			"R":
-				sub_hits = []
-				primary_dir = "rest"
-			_:
-				sub_hits = [{ "offset": 0.0, "dir": primary_dir }]
+		# Offsets come from tiles.json so drawing matches Song.gd judging
+		for off in TileDefs.get_hit_offsets(tile_type):
+			sub_hits.append({ "offset": off, "dir": primary_dir })
+		if sub_hits.is_empty():
+			primary_dir = "rest"
 
 	for _h in sub_hits:
 		sub_states.append(0)
@@ -90,6 +78,7 @@ func setup(t_type: String, p_dir: String, hits_data: Array = []) -> void:
 	queue_redraw()
 
 func reset_state() -> void:
+	cues = []
 	for i in range(sub_states.size()):
 		sub_states[i] = 0
 	is_active = false
@@ -143,7 +132,7 @@ func pulse_listen(index: int) -> void:
 
 func _process(delta: float) -> void:
 	idle_anim_time += delta
-	if is_active or hit_flash_alpha > 0.01:
+	if is_active or hit_flash_alpha > 0.01 or not cues.is_empty():
 		queue_redraw()
 
 func _draw() -> void:
@@ -217,6 +206,64 @@ func _draw() -> void:
 	if is_active:
 		draw_laser_playhead(rect)
 
+	# 15. Press cue rings (closing exactly on the press moment)
+	if not cues.is_empty():
+		draw_press_cues(rect, center_glyph_pos)
+
+func set_cues(new_cues: Array) -> void:
+	if new_cues.is_empty() and cues.is_empty():
+		return
+	cues = new_cues
+	queue_redraw()
+
+func draw_press_cues(r: Rect2, glyph_pos: Vector2) -> void:
+	# The next note to press gets the big ring around the arrow
+	var next_cue: Dictionary = cues[0]
+	for c in cues:
+		if float(c["remain"]) < float(next_cue["remain"]):
+			next_cue = c
+
+	var remain: float = float(next_cue["remain"])
+	var col: Color = DIR_COLORS.get(str(next_cue["dir"]), hero_yellow)
+	var is_now: bool = absf(remain) <= CUE_NOW_BAND
+
+	# Target ring (where the shrinking ring has to land)
+	draw_arc(glyph_pos, CUE_TARGET_RADIUS, 0, TAU, 32, Color(ink_color, 0.55), 2.0)
+
+	if is_now:
+		var glow = hero_yellow
+		glow.a = 0.55
+		draw_circle(glyph_pos, CUE_TARGET_RADIUS + 3.0, glow)
+		draw_arc(glyph_pos, CUE_TARGET_RADIUS, 0, TAU, 32, ink_color, 5.0)
+		draw_arc(glyph_pos, CUE_TARGET_RADIUS, 0, TAU, 32, hero_yellow, 3.0)
+		var font = ThemeDB.fallback_font
+		var txt = "NOW!"
+		var ts = font.get_string_size(txt, HORIZONTAL_ALIGNMENT_CENTER, -1, 15)
+		var tp = Vector2((r.size.x - ts.x) / 2.0, glyph_pos.y + CUE_TARGET_RADIUS + 15.0)
+		draw_string_outline(font, tp, txt, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 5, ink_color)
+		draw_string(font, tp, txt, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, hero_yellow)
+	elif remain > 0.0:
+		var radius = lerpf(CUE_TARGET_RADIUS, CUE_START_RADIUS, clampf(remain, 0.0, 1.0))
+		var ring = col
+		ring.a = lerpf(1.0, 0.6, clampf(remain, 0.0, 1.0))
+		draw_arc(glyph_pos, radius, 0, TAU, 48, Color(ink_color, ring.a), 9.0)
+		draw_arc(glyph_pos, radius, 0, TAU, 48, ring.lightened(0.15), 5.5)
+
+	# Small rings on the rhythm beads show which sub-hit each cue belongs to
+	if sub_hits.size() > 1 or (sub_hits.size() == 1 and not is_zero_approx(float(sub_hits[0].get("offset", 0.0)))):
+		var dot_y = r.size.y - 14.0
+		var usable_w = r.size.x - 28.0
+		for c in cues:
+			var idx: int = int(c["sub"])
+			if idx < 0 or idx >= sub_hits.size():
+				continue
+			var x = 14.0 + float(sub_hits[idx].get("offset", 0.0)) * usable_w
+			var rem: float = float(c["remain"])
+			if absf(rem) <= CUE_NOW_BAND:
+				draw_arc(Vector2(x, dot_y), 9.0, 0, TAU, 16, hero_yellow, 3.0)
+			elif rem > 0.0:
+				draw_arc(Vector2(x, dot_y), lerpf(8.0, 18.0, clampf(rem, 0.0, 1.0)), 0, TAU, 20, Color(ink_color, 0.8), 2.0)
+
 func draw_notebook_texture(r: Rect2) -> void:
 	# Horizontal faint blue ruled lines
 	for ly in range(36, int(r.size.y) - 20, 14):
@@ -270,7 +317,7 @@ func draw_washi_tape(r: Rect2, theme_col: Color) -> void:
 
 func draw_header_badge(r: Rect2, theme_col: Color) -> void:
 	var font = ThemeDB.fallback_font
-	var not_sym = TYPE_SYMBOLS.get(tile_type, "♩")
+	var not_sym = TileDefs.get_symbol(tile_type, TYPE_SYMBOLS.get(tile_type, "♩"))
 	var header_str = "%s  %s" % [tile_type, not_sym]
 
 	# Embossed white pill badge in header
@@ -345,7 +392,11 @@ func draw_rest_face(center: Vector2) -> void:
 	draw_string(font, center + Vector2(-10, -18 + float_y), "zZ", HORIZONTAL_ALIGNMENT_CENTER, -1, 14, DIR_COLORS["rest"])
 
 func draw_sub_hit_beads(r: Rect2) -> void:
-	if sub_hits.size() <= 1:
+	# Skip the bead row for a plain on-beat single hit (Q); still show it for
+	# single off-beat hits like ER so the player can see where the note lands.
+	if sub_hits.is_empty():
+		return
+	if sub_hits.size() == 1 and is_zero_approx(float(sub_hits[0].get("offset", 0.0))):
 		return
 
 	var dot_y = r.size.y - 14.0

@@ -1,0 +1,704 @@
+{
+  "title": "The Master Clock",
+  "bpm": 130,
+  "time_signature": [
+    4,
+    4
+  ],
+  "first_beat_offset_ms": 0,
+  "sfx_key": 0,
+  "audio": "res://assets/audio/music_finale.wav",
+  "opponent": "metronome",
+  "rows": [
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE METRONOME: TICK. TOCK.",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "CLAP: SHOW HIM A HUMAN BEAT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE METRONOME: TICK. TOCK.",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "FEEL IT, DON'T COUNT IT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE METRONOME: TICK. TOCK.",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "ALMOST THERE!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE METRONOME: EVERY RHYTHM AT ONCE",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "CLAP: REMEMBER YOUR TRAINING!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE METRONOME: EVERY RHYTHM AT ONCE",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ES"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "ALMOST THERE!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ES"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE METRONOME: EVERY RHYTHM AT ONCE",
+      "tiles": [
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "TEMPO CITY IS WATCHING!",
+      "tiles": [
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE METRONOME: ACCELERATING GEARS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "CLAP: STAY WITH HIM!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE METRONOME: ACCELERATING GEARS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "TEMPO CITY IS WATCHING!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE METRONOME: ACCELERATING GEARS",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "FEEL IT, DON'T COUNT IT!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE METRONOME: PERFECT QUANTIZATION",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "ES"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "CLAP: BREAK THE GRID!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "ES"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE METRONOME: PERFECT QUANTIZATION",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "FEEL IT, DON'T COUNT IT!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE METRONOME: PERFECT QUANTIZATION",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "ALMOST THERE!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE METRONOME: THE LAST TICK",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "STOP THE CLOCK!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "S4"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE METRONOME: THE LAST TICK",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ES"
+        },
+        {
+          "dir": "up",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "S4"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "ALMOST THERE!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ES"
+        },
+        {
+          "dir": "up",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "S4"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE METRONOME: THE LAST TICK",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "TEMPO CITY IS WATCHING!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    }
+  ]
+}

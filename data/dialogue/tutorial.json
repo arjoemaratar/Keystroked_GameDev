@@ -1,0 +1,75 @@
+{
+  "intro": [
+    {
+      "speaker": "Narrator",
+      "text": "Tempo City has always danced to the tick of the Great Metronome, the clock tower in the middle of town."
+    },
+    {
+      "speaker": "Narrator",
+      "text": "Last night, the Metronome decided people were too messy. Now anyone who hears its tick turns into a rhythm robot who can only play ONE rhythm, forever.",
+      "shot": "tower",
+      "flash": "#FF4D8D",
+      "shake": true
+    },
+    {
+      "speaker": "Narrator",
+      "text": "Everyone is getting ticked. Everyone except Clap, whose rhythm is so bad the Metronome can't lock onto it.",
+      "shot": "wide"
+    },
+    {
+      "speaker": "Clap",
+      "text": "Turns out \"worst dancer in the city\" is a superpower. Who knew?",
+      "pose": "cheer"
+    },
+    {
+      "speaker": "Beats",
+      "text": "Clap! I know how to wake people up! It's called an echo battle.",
+      "pose": "up"
+    },
+    {
+      "speaker": "Beats",
+      "text": "A ticked person plays a rhythm. You copy it back, exactly. Break their loop, and they snap out of it."
+    },
+    {
+      "speaker": "Clap",
+      "text": "Copy a rhythm. Me. The one with negative rhythm.",
+      "pose": "shock",
+      "shot": "close"
+    },
+    {
+      "speaker": "Beats",
+      "text": "That's why we're practicing first! I play a row, you play it back with the arrow keys or WASD. Wait for the count-in!"
+    }
+  ],
+  "win": [
+    {
+      "speaker": "Beats",
+      "text": "You did it! You're actually... kind of good at copying?"
+    },
+    {
+      "speaker": "Clap",
+      "text": "Okay. Wake everyone up, then march into that tower and shut the ticking off. Who's first?"
+    },
+    {
+      "speaker": "Beats",
+      "text": "The bus driver on Main Street. He's been stuck playing the same four beats since sunrise."
+    }
+  ],
+  "lose": [
+    {
+      "speaker": "Beats",
+      "text": "That's okay! Practice is for messing up. Again?"
+    }
+  ],
+  "taunts": {
+    "miss": [
+      "Oops! That's fine. Totally fine.",
+      "Listen first, then copy me!",
+      "Count with me: one, two, three, four..."
+    ],
+    "streak": [
+      "Whoa! Are you sure you're new at this?",
+      "Okay, now you're just showing off."
+    ]
+  }
+}

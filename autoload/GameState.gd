@@ -18,6 +18,7 @@ var total_expected_hits: int = 0
 # Settings
 var calibration_offset_ms: float = 0.0
 var scroll_speed: float = 1.0
+var show_press_cue: bool = true # shrinking "press now" rings on tiles during the play phase
 
 # Progression
 var selected_level_id: String = "tutorial"
@@ -140,7 +141,8 @@ func save_game() -> void:
 		"completed_levels": completed_levels,
 		"best_scores": best_scores,
 		"calibration_offset_ms": calibration_offset_ms,
-		"scroll_speed": scroll_speed
+		"scroll_speed": scroll_speed,
+		"show_press_cue": show_press_cue
 	}
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
@@ -165,5 +167,7 @@ func load_game() -> void:
 			best_scores = parsed["best_scores"]
 		if parsed.has("calibration_offset_ms"):
 			calibration_offset_ms = float(parsed["calibration_offset_ms"])
+		if parsed.has("show_press_cue"):
+			show_press_cue = bool(parsed["show_press_cue"])
 		if parsed.has("scroll_speed"):
 			scroll_speed = float(parsed["scroll_speed"])

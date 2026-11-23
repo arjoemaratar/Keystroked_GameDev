@@ -89,7 +89,11 @@ func build_level_cards() -> void:
 
 		# Subtitle / District Badge
 		var sub_label = Label.new()
-		sub_label.text = "★ " + lvl.get("subtitle", "District").to_upper()
+		var sub_text: String = "★ " + str(lvl.get("subtitle", "District")).to_upper()
+		if lvl.has("district"):
+			sub_text += "  ·  " + str(lvl["district"]).to_upper()
+		sub_label.text = sub_text
+		sub_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		sub_label.add_theme_font_size_override("font_size", 13)
 		sub_label.add_theme_color_override("font_color", Color("#F7D117") if is_unlocked else Color("#777788"))
 		vbox.add_child(sub_label)
@@ -101,6 +105,15 @@ func build_level_cards() -> void:
 		title_label.add_theme_font_size_override("font_size", 22)
 		title_label.add_theme_color_override("font_color", Color("#FFF8E7") if is_unlocked else Color("#666677"))
 		vbox.add_child(title_label)
+
+		# Story tagline
+		if lvl.has("tagline"):
+			var tag_label = Label.new()
+			tag_label.text = str(lvl["tagline"])
+			tag_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			tag_label.add_theme_font_size_override("font_size", 12)
+			tag_label.add_theme_color_override("font_color", Color("#FFF8E7").lerp(Color("#1B1B2F"), 0.3) if is_unlocked else Color("#555566"))
+			vbox.add_child(tag_label)
 
 		# Rival Badge
 		var rival_label = Label.new()

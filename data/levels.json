@@ -1,14 +1,17 @@
 [
   {
     "id": "tutorial",
-    "title": "Beats' Normal Dance Lesson",
+    "title": "Beats' Extremely Normal Dance Lesson",
     "subtitle": "Prologue",
     "rival": "Beats",
     "rival_type": "beats",
     "concept": "Arrow Basics & Timing",
     "chart": "res://data/charts/tutorial.json",
     "bpm": 90,
-    "unlock_req": "Available from start"
+    "unlock_req": "Available from start",
+    "district": "Tempo City Park",
+    "tagline": "Beats teaches Clap how echo battles wake people up.",
+    "dialogue": "res://data/dialogue/tutorial.json"
   },
   {
     "id": "week1",
@@ -19,51 +22,70 @@
     "concept": "Quarters & Eighths",
     "chart": "res://data/charts/week1.json",
     "bpm": 100,
-    "unlock_req": "Complete Tutorial"
+    "unlock_req": "Complete Tutorial",
+    "district": "Main Street",
+    "tagline": "The ticked bus driver won't open the doors. Wake him up.",
+    "dialogue": "res://data/dialogue/week1.json"
   },
   {
     "id": "week2",
     "title": "Swing Shuffle",
     "subtitle": "Week 2",
     "rival": "Swing Queen",
-    "rival_type": "straight_man",
+    "rival_type": "swing_queen",
     "concept": "Triplets & Shuffle",
-    "chart": "res://data/charts/week1.json",
+    "chart": "res://data/charts/week2.json",
     "bpm": 110,
-    "unlock_req": "Complete Week 1"
+    "unlock_req": "Complete Week 1",
+    "district": "The Blue Note Club",
+    "tagline": "Swing Queen is stuck singing in threes. Wake her up.",
+    "dialogue": "res://data/dialogue/week2.json"
   },
   {
     "id": "week3",
     "title": "Syncopated Chaos",
     "subtitle": "Week 3",
     "rival": "The Syncopator",
-    "rival_type": "straight_man",
+    "rival_type": "syncopator",
     "concept": "Off-beats & Rests",
-    "chart": "res://data/charts/week1.json",
+    "chart": "res://data/charts/week3.json",
     "bpm": 120,
-    "unlock_req": "Complete Week 2"
+    "unlock_req": "Complete Week 2",
+    "district": "The Night Market",
+    "tagline": "The Syncopator stole Beats' drum. Get it back.",
+    "dialogue": "res://data/dialogue/week3.json"
   },
   {
     "id": "week4",
     "title": "Twin Polyrhythm",
     "subtitle": "Week 4",
-    "rival": "The Twins",
-    "rival_type": "straight_man",
+    "rival": "The Twins (Tri & Quad)",
+    "rival_type": "twins",
     "concept": "3-against-4 Polyrhythm",
-    "chart": "res://data/charts/week1.json",
+    "chart": "res://data/charts/week4.json",
     "bpm": 125,
-    "unlock_req": "Complete Week 3"
+    "unlock_req": "Complete Week 3",
+    "district": "The Twins' Clock Shop",
+    "tagline": "Tri counts in 3, Quad counts in 4. Wake them both.",
+    "dialogue": "res://data/dialogue/week4.json",
+    "rival_speakers": [
+      "Tri",
+      "Quad",
+      "The Twins"
+    ]
   },
   {
     "id": "finale",
     "title": "The Master Clock",
     "subtitle": "Finale",
     "rival": "The Metronome",
-    "rival_type": "straight_man",
+    "rival_type": "metronome",
     "concept": "Human Groove vs Quantization",
-    "chart": "res://data/charts/week1.json",
+    "chart": "res://data/charts/finale.json",
     "bpm": 130,
-    "unlock_req": "Complete Week 4"
+    "unlock_req": "Complete Week 4",
+    "district": "The Great Metronome",
+    "tagline": "Echo the Metronome itself and stop the ticking.",
+    "dialogue": "res://data/dialogue/finale.json"
   }
 ]
-

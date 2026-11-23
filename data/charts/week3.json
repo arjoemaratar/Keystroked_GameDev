@@ -1,0 +1,704 @@
+{
+  "title": "Syncopated Chaos",
+  "bpm": 120,
+  "time_signature": [
+    4,
+    4
+  ],
+  "first_beat_offset_ms": 0,
+  "sfx_key": 4,
+  "audio": "res://assets/audio/music_week3.wav",
+  "opponent": "syncopator",
+  "rows": [
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: HOLES IN THE BEAT",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "CLAP: LEAVE THE RESTS EMPTY!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: HOLES IN THE BEAT",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "COUNT THE GAPS!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: HOLES IN THE BEAT",
+      "tiles": [
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "OFF-BEAT HERO!",
+      "tiles": [
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: HIT THE \"AND\"",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "CLAP: WAIT... THEN TAP ON THE AND!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: HIT THE \"AND\"",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "OFF-BEAT HERO!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: HIT THE \"AND\"",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "DON'T FALL FOR IT!",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: OFF-BEAT ALLEY",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "CLAP: FIND THE GAPS!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: OFF-BEAT ALLEY",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "DON'T FALL FOR IT!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: OFF-BEAT ALLEY",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "COUNT THE GAPS!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: GALLOPS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "CLAP: GALLOP WITH HIM!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: GALLOPS",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "ES"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "left",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "COUNT THE GAPS!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "ES"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "left",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: GALLOPS",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ES"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "OFF-BEAT HERO!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ES"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: TOTAL CHAOS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "SE"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "ES"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "TAKE BACK THE DRUM!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "down",
+          "type": "SE"
+        },
+        {
+          "dir": "up",
+          "type": "ER"
+        },
+        {
+          "dir": "right",
+          "type": "ES"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: TOTAL CHAOS",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "SE"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "down",
+          "type": "ES"
+        },
+        {
+          "dir": "left",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "OFF-BEAT HERO!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "SE"
+        },
+        {
+          "dir": "rest",
+          "type": "R"
+        },
+        {
+          "dir": "down",
+          "type": "ES"
+        },
+        {
+          "dir": "left",
+          "type": "ER"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE SYNCOPATOR: TOTAL CHAOS",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "DON'T FALL FOR IT!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "ER"
+        },
+        {
+          "dir": "left",
+          "type": "ER"
+        },
+        {
+          "dir": "up",
+          "type": "SE"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    }
+  ]
+}

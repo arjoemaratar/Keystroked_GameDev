@@ -1,0 +1,704 @@
+{
+  "title": "Swing Shuffle",
+  "bpm": 110,
+  "time_signature": [
+    4,
+    4
+  ],
+  "first_beat_offset_ms": 0,
+  "sfx_key": -7,
+  "audio": "res://assets/audio/music_week2.wav",
+  "opponent": "swing_queen",
+  "rows": [
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: WARM UP THE BAND",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "CLAP: EASY, ON THE BEAT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: WARM UP THE BAND",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "SMOOTH! AGAIN!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: WARM UP THE BAND",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "DON'T RUSH THE THREES!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: ONE TRIPLET (TRI-PO-LET)",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "CLAP: THREE EVEN TAPS IN ONE BEAT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: ONE TRIPLET (TRI-PO-LET)",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "DON'T RUSH THE THREES!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: ONE TRIPLET (TRI-PO-LET)",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "SWING IT!",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: DOUBLE TRIPLETS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "CLAP: ROLL THEM OUT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: DOUBLE TRIPLETS",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "SWING IT!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: DOUBLE TRIPLETS",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "SMOOTH! AGAIN!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: THREES MEET TWOS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "CLAP: SWITCH THE FEEL!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: THREES MEET TWOS",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "SMOOTH! AGAIN!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: THREES MEET TWOS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "DON'T RUSH THE THREES!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: THE SHOWSTOPPER",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "BRING DOWN THE HOUSE!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: THE SHOWSTOPPER",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "DON'T RUSH THE THREES!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "TR"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "SWING QUEEN: THE SHOWSTOPPER",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "SWING IT!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "TR"
+        },
+        {
+          "dir": "down",
+          "type": "TR"
+        },
+        {
+          "dir": "left",
+          "type": "TR"
+        },
+        {
+          "dir": "right",
+          "type": "TR"
+        }
+      ]
+    }
+  ]
+}

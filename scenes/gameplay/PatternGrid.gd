@@ -1,6 +1,7 @@
 extends Control
 
 const TILE_SCENE = preload("res://scenes/gameplay/Tile.tscn")
+const TileDefs = preload("res://scenes/gameplay/TileDefs.gd")
 
 @onready var grid_container: VBoxContainer = $RowsContainer
 
@@ -72,23 +73,13 @@ func render_page() -> void:
 
 		var row_tiles = []
 		for c in range(tiles_arr.size()):
-			var t_data = tiles_arr[c]
-			var t_type = "Q"
-			var t_dir = "left"
-			var sub_hits = []
-
-			if t_data is Dictionary:
-				t_type = t_data.get("type", "Q")
-				t_dir = t_data.get("dir", "left")
-				sub_hits = t_data.get("sub_hits", [])
-			elif t_data is String:
-				t_type = t_data
-				t_dir = "left"
+			# Same parsing as Song.gd judging, so drawn beads match hit timing
+			var tile_info: Dictionary = TileDefs.parse_tile(tiles_arr[c])
 
 			var tile_node = TILE_SCENE.instantiate()
 			row_hbox.add_child(tile_node)
 			if tile_node.has_method("setup"):
-				tile_node.setup(t_type, t_dir, sub_hits)
+				tile_node.setup(tile_info["type"], tile_info["dir"], tile_info["sub_hits"])
 			row_tiles.append(tile_node)
 
 		tile_instances.append(row_tiles)

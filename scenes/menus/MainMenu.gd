@@ -4,6 +4,8 @@ extends Control
 @onready var btn_play: Button = $VBoxContainer/ButtonsVBox/BtnPlay
 @onready var btn_tutorial: Button = $VBoxContainer/ButtonsVBox/BtnTutorial
 @onready var btn_levels: Button = $VBoxContainer/ButtonsVBox/BtnLevels
+@onready var btn_endless: Button = $VBoxContainer/ButtonsVBox/BtnEndless
+@onready var btn_settings: Button = $VBoxContainer/ButtonsVBox/BtnSettings
 @onready var btn_quit: Button = $VBoxContainer/ButtonsVBox/BtnQuit
 @onready var dancing_clap: Control = $DancingClap
 
@@ -19,10 +21,12 @@ func _ready() -> void:
 	btn_play.pressed.connect(_on_play_pressed)
 	btn_tutorial.pressed.connect(_on_tutorial_pressed)
 	btn_levels.pressed.connect(_on_levels_pressed)
+	btn_endless.pressed.connect(_on_endless_pressed)
+	btn_settings.pressed.connect(_on_settings_pressed)
 	btn_quit.pressed.connect(_on_quit_pressed)
 
 	# Add tactile hover bounce to all buttons
-	for btn in [btn_play, btn_tutorial, btn_levels, btn_quit]:
+	for btn in [btn_play, btn_tutorial, btn_levels, btn_endless, btn_settings, btn_quit]:
 		setup_button_hover(btn)
 
 	start_title_wobble()
@@ -106,6 +110,12 @@ func _on_tutorial_pressed() -> void:
 
 func _on_levels_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/menus/LevelSelect.tscn")
+
+func _on_endless_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/gameplay/Endless.tscn")
+
+func _on_settings_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/menus/Settings.tscn")
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

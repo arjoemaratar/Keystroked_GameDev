@@ -1,9 +1,13 @@
 {
   "title": "Straight Time",
   "bpm": 100,
-  "time_signature": [4, 4],
+  "time_signature": [
+    4,
+    4
+  ],
   "first_beat_offset_ms": 0,
-  "audio": "res://assets/audio/backing_100bpm.wav",
+  "sfx_key": -3,
+  "audio": "res://assets/audio/music_week1.wav",
   "opponent": "straight_man",
   "rows": [
     {
@@ -11,10 +15,22 @@
       "phase": "listen",
       "instruction": "THE STRAIGHT MAN: PRECISE STEADY TIME",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -22,10 +38,114 @@
       "phase": "play",
       "instruction": "CLAP: MATCH HIS PERFECT TIMING!",
       "tiles": [
-        { "dir": "left", "type": "Q" },
-        { "dir": "down", "type": "Q" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: PRECISE STEADY TIME",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "TIGHT! AGAIN!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: PRECISE STEADY TIME",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "phase": "play",
+      "instruction": "KEEP IT STRAIGHT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -33,10 +153,22 @@
       "phase": "listen",
       "instruction": "THE STRAIGHT MAN: EIGHTH NOTE PATTERNS",
       "tiles": [
-        { "dir": "left", "type": "E2" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "right", "type": "E2" },
-        { "dir": "down", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -44,10 +176,114 @@
       "phase": "play",
       "instruction": "CLAP: KEEP THE GROOVE ROLLING!",
       "tiles": [
-        { "dir": "left", "type": "E2" },
-        { "dir": "up", "type": "Q" },
-        { "dir": "right", "type": "E2" },
-        { "dir": "down", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: EIGHTH NOTE PATTERNS",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "KEEP IT STRAIGHT!",
+      "tiles": [
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: EIGHTH NOTE PATTERNS",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "phase": "play",
+      "instruction": "STAY ON THE GRID!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -55,10 +291,22 @@
       "phase": "listen",
       "instruction": "THE STRAIGHT MAN: SYNCED DOUBLE CUTS",
       "tiles": [
-        { "dir": "up", "type": "E2" },
-        { "dir": "down", "type": "E2" },
-        { "dir": "left", "type": "Q" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -66,10 +314,114 @@
       "phase": "play",
       "instruction": "ANSWER WITH FULL EXPRESSION!",
       "tiles": [
-        { "dir": "up", "type": "E2" },
-        { "dir": "down", "type": "E2" },
-        { "dir": "left", "type": "Q" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: SYNCED DOUBLE CUTS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "STAY ON THE GRID!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "Q"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: SYNCED DOUBLE CUTS",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "phase": "play",
+      "instruction": "TIGHT! AGAIN!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -77,10 +429,22 @@
       "phase": "listen",
       "instruction": "THE STRAIGHT MAN: THE FINAL CHALLENGE",
       "tiles": [
-        { "dir": "left", "type": "E2" },
-        { "dir": "down", "type": "E2" },
-        { "dir": "up", "type": "E2" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
       ]
     },
     {
@@ -88,10 +452,252 @@
       "phase": "play",
       "instruction": "PROVE HUMAN GROOVE BEATS PERFECT!",
       "tiles": [
-        { "dir": "left", "type": "E2" },
-        { "dir": "down", "type": "E2" },
-        { "dir": "up", "type": "E2" },
-        { "dir": "right", "type": "Q" }
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: THE FINAL CHALLENGE",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "TIGHT! AGAIN!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: THE FINAL CHALLENGE",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 4,
+      "phase": "play",
+      "instruction": "KEEP IT STRAIGHT!",
+      "tiles": [
+        {
+          "dir": "up",
+          "type": "Q"
+        },
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: SIXTEENTH-NOTE RUSH HOUR",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "WAKE HIM UP! FULL SPEED!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "E2"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: SIXTEENTH-NOTE RUSH HOUR",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "KEEP IT STRAIGHT!",
+      "tiles": [
+        {
+          "dir": "left",
+          "type": "S4"
+        },
+        {
+          "dir": "down",
+          "type": "Q"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "right",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "listen",
+      "instruction": "THE STRAIGHT MAN: SIXTEENTH-NOTE RUSH HOUR",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
+      ]
+    },
+    {
+      "level": 5,
+      "phase": "play",
+      "instruction": "STAY ON THE GRID!",
+      "tiles": [
+        {
+          "dir": "right",
+          "type": "E2"
+        },
+        {
+          "dir": "up",
+          "type": "E2"
+        },
+        {
+          "dir": "down",
+          "type": "S4"
+        },
+        {
+          "dir": "left",
+          "type": "Q"
+        }
       ]
     }
   ]

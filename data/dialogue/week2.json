@@ -1,0 +1,69 @@
+{
+  "intro": [
+    {
+      "speaker": "Narrator",
+      "text": "The Blue Note Club. Swing Queen is the best singer in town, but since she got ticked she can only sing in threes."
+    },
+    {
+      "speaker": "Swing Queen",
+      "text": "One-and-a, two-and-a, three-and-a... darling, the audience left hours ago, and I can't stop.",
+      "pose": "left"
+    },
+    {
+      "speaker": "Clap",
+      "text": "Threes, huh? Fine. I'll just press really, really fast.",
+      "pose": "right"
+    },
+    {
+      "speaker": "Beats",
+      "text": "No! Don't mash! Triplets bounce. Listen for the bounce, then copy it."
+    },
+    {
+      "speaker": "Swing Queen",
+      "text": "Listen to the little drummer, sweetie. Now... keep up.",
+      "shot": "close"
+    }
+  ],
+  "win": [
+    {
+      "speaker": "Swing Queen",
+      "text": "Ahh! I can sing in fours again! And twos! And whatever I want!",
+      "pose": "cheer",
+      "flash": "#4A7DBF"
+    },
+    {
+      "speaker": "Swing Queen",
+      "text": "You stopped mashing and started feeling it, darling. That's the whole secret."
+    },
+    {
+      "speaker": "Clap",
+      "text": "It's like the beat leans back a little.",
+      "pose": "left"
+    },
+    {
+      "speaker": "Swing Queen",
+      "text": "Exactly. Now go wake up the rest of them. I'll be cheering."
+    },
+    {
+      "speaker": "Beats",
+      "text": "Next is the Night Market. The Syncopator hangs out there... I hope he's okay."
+    }
+  ],
+  "lose": [
+    {
+      "speaker": "Swing Queen",
+      "text": "Too stiff, darling. Shake it out and try again."
+    }
+  ],
+  "taunts": {
+    "miss": [
+      "Mashing again, sweetie?",
+      "Feel it, don't fight it.",
+      "Ooh, so close. Not really."
+    ],
+    "streak": [
+      "Oh, that was smooth.",
+      "Darling, my loop is wobbling!"
+    ]
+  }
+}

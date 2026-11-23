@@ -1,6 +1,6 @@
 extends Control
 
-@export var character_type: String = "clap" # "clap", "beats", "straight_man"
+@export var character_type: String = "clap" # clap, beats, straight_man, swing_queen, syncopator, twins, metronome
 @export var character_name: String = "Clap"
 
 var current_pose: String = "idle" # "idle", "hit", "miss", "left", "down", "up", "right"
@@ -72,6 +72,7 @@ func trigger_direction(dir: String) -> void:
 		active_tween.kill()
 	current_pose = dir
 	active_tween = create_tween()
+	fx_hit_burst(dir)
 
 	# Dynamic pop effects
 	hit_star_scale = 1.3
@@ -137,6 +138,7 @@ func trigger_miss() -> void:
 	if active_tween and active_tween.is_valid():
 		active_tween.kill()
 	current_pose = "miss"
+	fx_miss_puff()
 	bounce_offset_y = 12.0
 	sweat_alpha = 1.0
 	rotation_angle = 0.16
@@ -152,6 +154,7 @@ func trigger_miss() -> void:
 
 func _process(delta: float) -> void:
 	idle_time += delta
+	_fx_process(delta)
 
 	# Natural blinking cycle
 	blink_timer -= delta
@@ -186,17 +189,33 @@ func _draw() -> void:
 	# Transform for character rendering
 	draw_set_transform(center, rotation_angle, effective_scale)
 
+	draw_power_aura()
+
 	match character_type:
 		"beats":
 			draw_beats_character()
 		"straight_man":
 			draw_straight_man()
+		"swing_queen":
+			draw_swing_queen()
+		"syncopator":
+			draw_syncopator()
+		"twins":
+			draw_twins()
+		"metronome":
+			draw_metronome_bot()
 		_:
 			draw_clap_character()
 
 	# Comic hit stars / sparkles pop
 	if hit_star_alpha > 0.01:
 		draw_comic_hit_stars()
+
+	# Particles in un-squashed space around the character
+	if is_echo:
+		return
+	draw_set_transform(size / 2.0, 0.0, Vector2.ONE)
+	draw_fx_particles()
 
 	# Reset transform for HUD name tag badge
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -750,6 +769,7 @@ func draw_straight_man() -> void:
 
 	# 4. Rectangular Stiff Head & Monocle
 	draw_straight_man_head()
+	draw_driver_cap()
 
 	# 5. Crisp Hands with Golden Cuff Links
 	draw_straight_man_hands()
@@ -907,3 +927,707 @@ func draw_rect_rounded_outline(r: Rect2, radius: float, col: Color, width: float
 	style.border_width_bottom = int(width)
 	style.border_color = col
 	style.draw(get_canvas_item(), r)
+
+# ==============================================================================
+# Shared helpers for the newer characters
+# ==============================================================================
+var skin_warm: Color = Color("#C98B62")
+var skin_light: Color = Color("#F2C9A0")
+var queen_purple: Color = Color("#6B3FA0")
+var neon_pink: Color = Color("#FF4D8D")
+var neon_cyan: Color = Color("#00E5FF")
+var mohawk_green: Color = Color("#6BCB5A")
+var shadow_col: Color = Color(0.1, 0.1, 0.15, 0.28)
+
+func draw_poly(pts: PackedVector2Array, fill: Color, outline_w: float = 3.0) -> void:
+	draw_colored_polygon(pts, fill)
+	draw_polyline(pts + PackedVector2Array([pts[0]]), ink_color, outline_w)
+
+func draw_ring(pos: Vector2, r: float, fill: Color, outline_w: float = 3.0) -> void:
+	draw_circle(pos, r, fill)
+	draw_arc(pos, r, 0, TAU, 28, ink_color, outline_w)
+
+func pose_hands(base_l: Vector2, base_r: Vector2) -> Array:
+	var lh = base_l + limb_offset
+	var rh = base_r + limb_offset
+	match current_pose:
+		"left":
+			lh = base_l + Vector2(-18, -14)
+			rh = base_l + Vector2(16, -4)
+		"right":
+			lh = base_r + Vector2(-16, -4)
+			rh = base_r + Vector2(18, -14)
+		"up":
+			lh = base_l + Vector2(-6, -52)
+			rh = base_r + Vector2(6, -52)
+		"down":
+			lh = base_l + Vector2(-4, 18)
+			rh = base_r + Vector2(4, 18)
+	return [lh, rh]
+
+func draw_simple_eyes(l: Vector2, r: Vector2, radius: float) -> void:
+	if current_pose == "miss":
+		draw_x_eye(l)
+		draw_x_eye(r)
+	elif is_blinking:
+		draw_arc(l + Vector2(0, 2), radius + 1.0, PI + 0.3, TAU - 0.3, 10, ink_color, 2.5)
+		draw_arc(r + Vector2(0, 2), radius + 1.0, PI + 0.3, TAU - 0.3, 10, ink_color, 2.5)
+	else:
+		var look = "center" if current_pose in ["idle", "hit"] else current_pose
+		draw_glossy_eye(l, radius, look)
+		draw_glossy_eye(r, radius, look)
+
+# ==============================================================================
+# 4. SWING QUEEN (Jazz singer: sequin gown, big curls, vintage mic)
+# ==============================================================================
+func draw_swing_queen() -> void:
+	# Swings in a lazy triplet sway
+	var sway = sin(idle_time * 2.2) * 4.0 + hoodie_swing * 24.0
+	draw_ellipse_shape(Vector2(4, 98), Vector2(56, 13), shadow_col)
+
+	# Sequin gown: a tall triangle that flares at the hem
+	var gown = PackedVector2Array([
+		Vector2(-15, -8), Vector2(15, -8),
+		Vector2(50 + sway, 92), Vector2(-50 + sway, 92)
+	])
+	draw_poly(gown, triplet_blue, 3.5)
+	for i in range(16):
+		var t = float(i % 4) / 3.0
+		var row = float(i / 4) / 3.0
+		var y = 6.0 + row * 80.0
+		var half_w = 15.0 + (y + 8.0) / 100.0 * 35.0
+		var x = lerpf(-half_w + 8.0, half_w - 8.0, t) + sway * (y + 8.0) / 100.0
+		var tw = 0.45 + 0.55 * absf(sin(idle_time * 3.0 + float(i) * 1.7))
+		draw_circle(Vector2(x, y), 2.2, Color(1, 1, 1, tw * 0.8))
+	# Scalloped hem
+	for i in range(7):
+		var hx = -44.0 + float(i) * 14.7 + sway
+		draw_arc(Vector2(hx, 92), 7.0, 0, PI, 8, ink_color, 2.5)
+	# Gold belt
+	draw_rect_rounded(Rect2(-17, 4, 34, 7), 3.0, gold_color)
+	draw_rect_rounded_outline(Rect2(-17, 4, 34, 7), 3.0, ink_color, 2.0)
+
+	# Feather boa draped over the shoulders
+	var boa = PackedVector2Array()
+	for i in range(13):
+		var t = float(i) / 12.0
+		var bx = lerpf(-36.0, 36.0, t)
+		var by = -4.0 + 8.0 * pow(2.0 * t - 1.0, 2.0) + sin(idle_time * 5.0 + t * 9.0) * 2.0
+		boa.append(Vector2(bx, by))
+	draw_polyline(boa, ink_color, 14.0)
+	draw_polyline(boa, blush_pink, 10.0)
+	for i in range(0, 13, 2):
+		draw_circle(boa[i] + Vector2(0, 3), 3.0, Color("#FFC2D1"))
+
+	# Arms + hands, right hand holds a vintage mic
+	var hands = pose_hands(Vector2(-36, 28), Vector2(34, 10))
+	var lh: Vector2 = hands[0]
+	var rh: Vector2 = hands[1]
+	draw_line(Vector2(-16, 0), lh, ink_color, 7.0)
+	draw_line(Vector2(-16, 0), lh, skin_warm, 4.0)
+	draw_line(Vector2(16, 0), rh, ink_color, 7.0)
+	draw_line(Vector2(16, 0), rh, skin_warm, 4.0)
+	# Long satin glove on the hand
+	draw_ring(lh, 7.5, paper_white, 2.5)
+	draw_ring(rh, 7.5, paper_white, 2.5)
+	var mic_top = rh + Vector2(4, -20)
+	draw_line(rh, mic_top, ink_color, 5.0)
+	draw_ring(mic_top, 7.0, Color("#B8B8C8"), 2.5)
+	for k in range(-1, 2):
+		draw_line(mic_top + Vector2(-5, k * 3), mic_top + Vector2(5, k * 3), ink_color, 1.0)
+
+	# Big curly hair behind the head
+	var head = Vector2(0, -38)
+	var bob = hair_bob * 0.5
+	for c in [Vector2(-22, -8), Vector2(22, -8), Vector2(-16, -26), Vector2(16, -26), Vector2(0, -32), Vector2(-26, 8), Vector2(26, 8)]:
+		draw_circle(head + c + Vector2(0, bob), 14.0, ink_color)
+	for c in [Vector2(-22, -8), Vector2(22, -8), Vector2(-16, -26), Vector2(16, -26), Vector2(0, -32), Vector2(-26, 8), Vector2(26, 8)]:
+		draw_circle(head + c + Vector2(0, bob), 11.5, queen_purple)
+
+	# Face
+	draw_ring(head, 21.0, skin_warm, 3.0)
+	var eye_y = head.y - 3.0
+	if current_pose == "miss":
+		draw_x_eye(Vector2(-8, eye_y))
+		draw_x_eye(Vector2(8, eye_y))
+		draw_arc(Vector2(0, eye_y + 15), 4.0, 0, TAU, 10, ink_color, 2.5)
+	else:
+		for ex in [-8.0, 8.0]:
+			if is_blinking or current_pose == "idle":
+				# Glamorous half-closed eyes with lashes
+				draw_arc(Vector2(ex, eye_y), 5.0, 0.2, PI - 0.2, 10, ink_color, 2.5)
+				for l in range(3):
+					var a = 0.5 + float(l) * 1.0
+					var p = Vector2(ex, eye_y) + Vector2(cos(a), sin(a)) * 5.0
+					draw_line(p, p + Vector2(cos(a), sin(a)) * 3.5, ink_color, 1.5)
+			else:
+				draw_glossy_eye(Vector2(ex, eye_y), 4.0, current_pose)
+		# Red lips (open when performing)
+		if current_pose in ["left", "right", "up", "down"]:
+			draw_circle(Vector2(0, eye_y + 14), 5.0, straight_red)
+			draw_circle(Vector2(0, eye_y + 15), 2.5, ink_color)
+		else:
+			draw_ellipse_shape(Vector2(0, eye_y + 13), Vector2(6, 3), straight_red)
+	draw_rosy_blush(Vector2(-13, eye_y + 8))
+	draw_rosy_blush(Vector2(13, eye_y + 8))
+
+	# Tiara
+	var tiara = PackedVector2Array([
+		head + Vector2(-14, -20 + bob), head + Vector2(-8, -34 + bob), head + Vector2(-3, -24 + bob),
+		head + Vector2(0, -38 + bob), head + Vector2(3, -24 + bob), head + Vector2(8, -34 + bob),
+		head + Vector2(14, -20 + bob)
+	])
+	draw_poly(tiara, gold_color, 2.0)
+	draw_circle(head + Vector2(0, -27 + bob), 2.5, neon_pink)
+
+	if sweat_alpha > 0.01:
+		draw_sweat_and_dizzy_cloud()
+
+# ==============================================================================
+# 5. THE SYNCOPATOR (Off-beat prankster: leaning hoodie, mohawk, odd shoes)
+# ==============================================================================
+func draw_syncopator() -> void:
+	var lean = 0.14 + sin(idle_time * 3.7) * 0.05
+	var sk = func(p: Vector2) -> Vector2: return Vector2(p.x - p.y * lean, p.y)
+	draw_ellipse_shape(Vector2(6, 96), Vector2(46, 12), shadow_col)
+
+	# Skinny legs + mismatched sneakers
+	for side in [-1.0, 1.0]:
+		var hip = sk.call(Vector2(side * 10, 62))
+		var foot = Vector2(side * 14 + (foot_tap_l if side < 0 else foot_tap_r), 88)
+		draw_line(hip, foot, ink_color, 9.0)
+		draw_line(hip, foot, Color("#3A3A52"), 6.0)
+		var shoe = Rect2(foot.x - 12, foot.y - 2, 24, 10)
+		draw_rect_rounded(shoe, 4.0, rest_orange if side < 0 else neon_pink)
+		draw_rect_rounded_outline(shoe, 4.0, ink_color, 2.5)
+
+	# Leaning hoodie with a zigzag stripe
+	var body = PackedVector2Array([
+		sk.call(Vector2(-25, -6)), sk.call(Vector2(25, -6)),
+		sk.call(Vector2(29, 66)), sk.call(Vector2(-27, 66))
+	])
+	draw_poly(body, offbeat_green, 3.5)
+	var zig = PackedVector2Array()
+	for i in range(7):
+		zig.append(sk.call(Vector2(-25 + i * 8.6, 28 + (8 if i % 2 == 0 else -8))))
+	draw_polyline(zig, ink_color, 6.0)
+	draw_polyline(zig, hero_yellow, 3.5)
+	# Hood strings
+	draw_line(sk.call(Vector2(-6, -4)), sk.call(Vector2(-8, 14)), paper_white, 2.0)
+	draw_line(sk.call(Vector2(6, -4)), sk.call(Vector2(8, 16)), paper_white, 2.0)
+
+	# Arms: one hand does finger guns
+	var hands = pose_hands(sk.call(Vector2(-38, 30)), sk.call(Vector2(40, 12)))
+	var lh: Vector2 = hands[0]
+	var rh: Vector2 = hands[1]
+	draw_line(sk.call(Vector2(-22, 2)), lh, ink_color, 9.0)
+	draw_line(sk.call(Vector2(-22, 2)), lh, offbeat_green, 6.0)
+	draw_line(sk.call(Vector2(22, 2)), rh, ink_color, 9.0)
+	draw_line(sk.call(Vector2(22, 2)), rh, offbeat_green, 6.0)
+	draw_ring(lh, 8.0, skin_light, 2.5)
+	draw_ring(rh, 8.0, skin_light, 2.5)
+	draw_line(rh, rh + Vector2(12, -4), ink_color, 5.0)
+	draw_line(rh, rh + Vector2(12, -4), skin_light, 2.5)
+
+	# Tilted oval head
+	var head = sk.call(Vector2(-2, -36))
+	var head_pts = PackedVector2Array()
+	for i in range(24):
+		var a = float(i) / 24.0 * TAU
+		head_pts.append(head + Vector2(cos(a) * 20.0, sin(a) * 24.0).rotated(-0.18))
+	# Mohawk spikes (behind the head outline so it reads as hair)
+	for i in range(5):
+		var bx = -12.0 + float(i) * 6.0
+		var tip_sway = sin(idle_time * 6.0 + float(i)) * 2.0 + hair_bob
+		var spike = PackedVector2Array([
+			head + Vector2(bx - 4, -18).rotated(-0.18),
+			head + Vector2(bx + tip_sway + 3, -40 - (i % 2) * 6).rotated(-0.18),
+			head + Vector2(bx + 4, -18).rotated(-0.18)
+		])
+		draw_poly(spike, mohawk_green, 2.5)
+	draw_poly(head_pts, skin_light, 3.0)
+
+	# Mismatched eyes: one big, one small, plus a raised brow
+	var le = head + Vector2(-8, -4)
+	var re = head + Vector2(9, -2)
+	if current_pose == "miss":
+		draw_x_eye(le)
+		draw_x_eye(re)
+	elif is_blinking:
+		draw_line(le + Vector2(-6, 0), le + Vector2(6, 0), ink_color, 2.5)
+		draw_line(re + Vector2(-4, 0), re + Vector2(4, 0), ink_color, 2.5)
+	else:
+		draw_ring(le, 7.0, paper_white, 2.5)
+		draw_circle(le + Vector2(2, 1), 3.2, ink_color)
+		draw_ring(re, 4.5, paper_white, 2.0)
+		draw_circle(re + Vector2(1, 1), 2.0, ink_color)
+	draw_line(le + Vector2(-7, -11 + sin(idle_time * 5.0) * 2.0), le + Vector2(5, -14), ink_color, 2.5)
+	# Gap-toothed grin
+	var m = head + Vector2(1, 11)
+	draw_arc(m, 9.0, 0.1, PI - 0.1, 12, ink_color, 3.0)
+	draw_rect(Rect2(m.x - 6, m.y + 1, 5, 5), paper_white)
+	draw_rect(Rect2(m.x + 1, m.y + 1, 5, 5), paper_white)
+	# Gold earring
+	draw_arc(head + Vector2(20, 4), 3.5, 0, TAU, 10, gold_color, 2.0)
+
+	if sweat_alpha > 0.01:
+		draw_sweat_and_dizzy_cloud()
+
+# ==============================================================================
+# 6. THE TWINS: TRI (triangle, counts in 3) and QUAD (square, counts in 4)
+# ==============================================================================
+func draw_twins() -> void:
+	draw_ellipse_shape(Vector2(4, 96), Vector2(70, 13), shadow_col)
+	# Bob out of sync: Tri on a 3-feel, Quad on a 4-feel
+	var tri_y = -absf(sin(idle_time * 4.2)) * 5.0
+	var quad_y = -absf(sin(idle_time * 3.15)) * 5.0
+	draw_tri(Vector2(-30, tri_y))
+	draw_quad(Vector2(32, quad_y))
+
+func draw_tri(o: Vector2) -> void:
+	# Legs
+	for lx in [-10.0, 10.0]:
+		draw_line(o + Vector2(lx, 78), o + Vector2(lx, 92), ink_color, 5.0)
+		draw_rect_rounded(Rect2(o.x + lx - 8, o.y + 88, 16, 7), 3.0, ink_color)
+	# Triangle body
+	draw_poly(PackedVector2Array([o + Vector2(0, -4), o + Vector2(30, 80), o + Vector2(-30, 80)]), rest_orange, 3.5)
+	# Shop apron with a big 3
+	draw_poly(PackedVector2Array([o + Vector2(-12, 34), o + Vector2(12, 34), o + Vector2(16, 74), o + Vector2(-16, 74)]), paper_white, 2.5)
+	draw_string(ThemeDB.fallback_font, o + Vector2(-7, 64), "3", HORIZONTAL_ALIGNMENT_LEFT, -1, 26, rest_orange.darkened(0.3))
+	# Arms
+	var hands = pose_hands(o + Vector2(-26, 40), o + Vector2(24, 40))
+	draw_line(o + Vector2(-10, 26), hands[0], ink_color, 4.0)
+	draw_line(o + Vector2(10, 26), hands[1], ink_color, 4.0)
+	draw_ring(hands[0], 6.0, skin_light, 2.0)
+	draw_ring(hands[1], 6.0, skin_light, 2.0)
+	# Round head with a three-spike haircut
+	var head = o + Vector2(0, -22)
+	for i in range(3):
+		var sx = -9.0 + float(i) * 9.0
+		draw_poly(PackedVector2Array([head + Vector2(sx - 6, -12), head + Vector2(sx, -30 + hair_bob * 0.5), head + Vector2(sx + 6, -12)]), Color("#3A2A20"), 2.0)
+	draw_ring(head, 17.0, skin_light, 3.0)
+	draw_simple_eyes(head + Vector2(-6, -2), head + Vector2(6, -2), 3.5)
+	if current_pose in ["left", "right", "up", "down"]:
+		draw_open_singing_mouth(head + Vector2(0, 8))
+	else:
+		draw_arc(head + Vector2(0, 6), 5.0, 0.3, PI - 0.3, 8, ink_color, 2.5)
+
+func draw_quad(o: Vector2) -> void:
+	for lx in [-12.0, 12.0]:
+		draw_line(o + Vector2(lx, 78), o + Vector2(lx, 92), ink_color, 5.0)
+		draw_rect_rounded(Rect2(o.x + lx - 8, o.y + 88, 16, 7), 3.0, ink_color)
+	# Square body
+	var body = Rect2(o.x - 24, o.y + 4, 48, 76)
+	draw_rect_rounded(body, 4.0, Color("#B85F35"))
+	draw_rect_rounded_outline(body, 4.0, ink_color, 3.5)
+	draw_rect_rounded(Rect2(o.x - 14, o.y + 34, 28, 40), 3.0, paper_white)
+	draw_rect_rounded_outline(Rect2(o.x - 14, o.y + 34, 28, 40), 3.0, ink_color, 2.5)
+	draw_string(ThemeDB.fallback_font, o + Vector2(-7, 64), "4", HORIZONTAL_ALIGNMENT_LEFT, -1, 26, Color("#B85F35").darkened(0.3))
+	var hands = pose_hands(o + Vector2(-32, 42), o + Vector2(32, 42))
+	draw_line(o + Vector2(-22, 20), hands[0], ink_color, 4.0)
+	draw_line(o + Vector2(22, 20), hands[1], ink_color, 4.0)
+	draw_ring(hands[0], 6.0, skin_light, 2.0)
+	draw_ring(hands[1], 6.0, skin_light, 2.0)
+	# Square head, flat-top hair, square glasses
+	var head = Rect2(o.x - 18, o.y - 40, 36, 36)
+	draw_rect_rounded(head, 5.0, skin_light)
+	draw_rect_rounded_outline(head, 5.0, ink_color, 3.0)
+	draw_rect_rounded_top(Rect2(head.position.x, head.position.y - 4 + hair_bob * 0.3, 36, 10), 4.0, Color("#3A2A20"))
+	var c = head.get_center()
+	for gx in [-8.0, 8.0]:
+		draw_rect_rounded_outline(Rect2(c.x + gx - 6, c.y - 7, 12, 10), 2.0, ink_color, 2.0)
+	draw_line(Vector2(c.x - 2, c.y - 3), Vector2(c.x + 2, c.y - 3), ink_color, 2.0)
+	if current_pose == "miss":
+		draw_x_eye(c + Vector2(-8, -2))
+		draw_x_eye(c + Vector2(8, -2))
+	elif not is_blinking:
+		draw_circle(c + Vector2(-8, -2), 2.2, ink_color)
+		draw_circle(c + Vector2(8, -2), 2.2, ink_color)
+	else:
+		draw_line(c + Vector2(-12, -2), c + Vector2(-4, -2), ink_color, 2.0)
+		draw_line(c + Vector2(4, -2), c + Vector2(12, -2), ink_color, 2.0)
+	if current_pose in ["left", "right", "up", "down"]:
+		draw_rect(Rect2(c.x - 6, c.y + 6, 12, 7), ink_color)
+	else:
+		draw_line(c + Vector2(-6, 9), c + Vector2(6, 9), ink_color, 2.5)
+
+# ==============================================================================
+# 7. THE METRONOME (the clock tower's robot form: pyramid body, swinging arm, clock eye)
+# ==============================================================================
+func draw_metronome_bot() -> void:
+	draw_ellipse_shape(Vector2(4, 98), Vector2(58, 13), shadow_col)
+	# Stubby feet
+	for fx in [-28.0, 28.0]:
+		draw_rect_rounded(Rect2(fx - 12, 86, 24, 10), 3.0, ink_color)
+	# Pyramid body
+	var body = PackedVector2Array([Vector2(-20, -88), Vector2(20, -88), Vector2(52, 90), Vector2(-52, 90)])
+	draw_poly(body, suit_navy, 4.0)
+	var panel = PackedVector2Array([Vector2(-12, -30), Vector2(12, -30), Vector2(30, 80), Vector2(-30, 80)])
+	draw_poly(panel, suit_stripe, 2.5)
+	# Tempo scale tick marks
+	for i in range(8):
+		var y = -22.0 + float(i) * 12.0
+		var w = 6.0 + float(i) * 1.6
+		draw_line(Vector2(-w, y), Vector2(w, y), neon_pink.lerp(suit_stripe, 0.4), 2.0)
+	# Neon trim + finial
+	draw_line(Vector2(-20, -88), Vector2(-52, 90), neon_pink, 2.0)
+	draw_line(Vector2(20, -88), Vector2(52, 90), neon_pink, 2.0)
+	draw_poly(PackedVector2Array([Vector2(-8, -88), Vector2(0, -100), Vector2(8, -88)]), gold_color, 2.5)
+
+	# Gear hands on thin metal arms
+	var hands = pose_hands(Vector2(-54, 30), Vector2(54, 30))
+	for i in range(2):
+		var shoulder = Vector2(-26 if i == 0 else 26, -10)
+		var h: Vector2 = hands[i]
+		draw_line(shoulder, h, ink_color, 6.0)
+		draw_line(shoulder, h, Color("#8C8CA8"), 3.0)
+		for k in range(8):
+			var a = float(k) / 8.0 * TAU + idle_time * 2.0
+			draw_line(h, h + Vector2(cos(a), sin(a)) * 11.0, ink_color, 4.0)
+		draw_ring(h, 8.0, Color("#8C8CA8"), 2.5)
+
+	# Swinging pendulum arm (pivot near the base, weight slides on the rod)
+	var swing = sin(idle_time * 3.4) * 0.45 + rotation_angle * 2.0
+	var pivot = Vector2(0, 72)
+	var tip = pivot + Vector2(sin(swing), -cos(swing)) * 118.0
+	draw_line(pivot, tip, ink_color, 6.0)
+	draw_line(pivot, tip, gold_color, 3.0)
+	var wpos = pivot.lerp(tip, 0.62)
+	var wdir = (tip - pivot).normalized()
+	var wperp = Vector2(-wdir.y, wdir.x)
+	draw_poly(PackedVector2Array([
+		wpos + wdir * 8 + wperp * 9, wpos + wdir * 8 - wperp * 9,
+		wpos - wdir * 8 - wperp * 13, wpos - wdir * 8 + wperp * 13
+	]), gold_color, 2.5)
+	draw_ring(pivot, 5.0, gold_color, 2.0)
+
+	# Single clock-face eye
+	var eye = Vector2(0, -52)
+	var glow = Color(neon_cyan.r, neon_cyan.g, neon_cyan.b, 0.25 + absf(sin(idle_time * 3.4)) * 0.2)
+	draw_circle(eye, 22.0, glow)
+	if current_pose == "miss":
+		# Glitch: pink X and sparks
+		draw_ring(eye, 15.0, Color("#2A0E1E"), 3.0)
+		draw_line(eye + Vector2(-8, -8), eye + Vector2(8, 8), neon_pink, 4.0)
+		draw_line(eye + Vector2(8, -8), eye + Vector2(-8, 8), neon_pink, 4.0)
+		for k in range(5):
+			var a = float(k) * 1.3 + idle_time * 20.0
+			draw_line(eye + Vector2(cos(a), sin(a)) * 20.0, eye + Vector2(cos(a), sin(a)) * 28.0, hero_yellow, 2.0)
+	elif is_blinking:
+		draw_ring(eye, 15.0, suit_stripe, 3.0)
+		draw_line(eye + Vector2(-12, 0), eye + Vector2(12, 0), neon_cyan, 3.0)
+	else:
+		draw_ring(eye, 15.0, paper_white, 3.0)
+		for k in range(12):
+			var a = float(k) / 12.0 * TAU
+			draw_line(eye + Vector2(cos(a), sin(a)) * 11.0, eye + Vector2(cos(a), sin(a)) * 14.0, ink_color, 1.5)
+		var look = Vector2.ZERO
+		match current_pose:
+			"left": look = Vector2(-3, 0)
+			"right": look = Vector2(3, 0)
+			"up": look = Vector2(0, -3)
+			"down": look = Vector2(0, 3)
+		var ha = idle_time * 1.2
+		draw_line(eye + look, eye + look + Vector2(cos(ha), sin(ha)) * 9.0, ink_color, 2.5)
+		draw_line(eye + look, eye + look + Vector2(cos(ha * 12.0), sin(ha * 12.0)) * 11.0, neon_pink, 1.5)
+		draw_circle(eye + look, 2.5, neon_pink)
+
+# ==============================================================================
+# Straight Man's bus driver cap (he drives the Main Street bus)
+# ==============================================================================
+func draw_driver_cap() -> void:
+	var crown = Rect2(-28, -84, 56, 20)
+	draw_rect_rounded_top(crown, 10.0, suit_navy)
+	draw_rect_rounded_outline(crown, 6.0, ink_color, 3.0)
+	draw_rect(Rect2(-28, -70, 56, 6), suit_stripe)
+	var brim = PackedVector2Array([Vector2(-30, -64), Vector2(30, -64), Vector2(24, -57), Vector2(-24, -57)])
+	draw_poly(brim, ink_color, 2.0)
+	draw_ring(Vector2(0, -75), 5.0, gold_color, 2.0)
+	draw_string(ThemeDB.fallback_font, Vector2(-9, -86), "BUS", HORIZONTAL_ALIGNMENT_LEFT, -1, 9, gold_color)
+
+# ==============================================================================
+# RHYTHM FX (KeyStroked's own look)
+# - The Echo: a ghostly copy floats behind the character and repeats their moves a beat
+#   late. Clap's Echo appears as your combo grows; rivals' Echo shows when they play hard.
+# - A spinning vinyl disc under their feet pulses on the beat.
+# - Hits fire arrow chevrons in the lane's colour plus speaker sound waves and little notes.
+# - Misses do a grey record-scratch and drop a sad flat note.
+# - At full power, beat-count stickers (1, 2, 3, 4) pop up like rhythm tiles.
+# ==============================================================================
+const FX_MAX_PARTICLES: int = 90
+const LANE_COLORS: Dictionary = {
+	"left": Color("#C85A6E"), "down": Color("#4A7DBF"), "up": Color("#4E9A5E"), "right": Color("#D17B4A"),
+}
+var fx_particles: Array = []
+var aura_flare: float = 0.0
+var aura_time: float = 0.0
+var note_timer: float = 0.0
+var sticker_timer: float = 0.0
+var sticker_count: int = 0
+var last_pulse_beat: int = -1
+
+# The Echo: a ghostly copy of the character that floats behind them and repeats
+# their moves a moment later (call and response!). Fades in as power builds.
+const ECHO_DELAY: float = 0.13
+var is_echo: bool = false
+var echo: Control = null
+
+func _setup_echo() -> void:
+	if is_echo or echo != null:
+		return
+	echo = Control.new()
+	echo.set_script(get_script())
+	echo.set("is_echo", true)
+	echo.show_behind_parent = true
+	echo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(echo)
+	echo.modulate.a = 0.0
+
+func _update_echo(delta: float) -> void:
+	if is_echo:
+		return
+	if echo == null:
+		_setup_echo()
+	echo.set("character_type", character_type)
+	echo.size = size
+	echo.pivot_offset = Vector2(size.x / 2.0, size.y)
+	var power := aura_power()
+	var target := clampf((power - 0.3) / 0.9, 0.0, 1.0) * 0.5
+	var col := aura_color().lightened(0.35)
+	var alpha := move_toward(echo.modulate.a, target, delta * 1.5)
+	echo.modulate = Color(col.r, col.g, col.b, alpha)
+	echo.visible = alpha > 0.01
+	var side := -1.0 if (global_position.x + size.x / 2.0) < 640.0 else 1.0
+	echo.position = Vector2(side * 22.0 + sin(aura_time * 1.3) * 4.0, -38.0 + sin(aura_time * 2.1) * 5.0)
+	echo.scale = Vector2(1.18, 1.18)
+
+func _echo_repeat(dir: String) -> void:
+	if echo == null or is_echo:
+		return
+	get_tree().create_timer(ECHO_DELAY).timeout.connect(func():
+		if is_instance_valid(echo):
+			if dir == "miss":
+				echo.trigger_miss()
+			else:
+				echo.trigger_direction(dir))
+
+func aura_color() -> Color:
+	match character_type:
+		"beats": return cardboard_light
+		"straight_man": return straight_red
+		"swing_queen": return Color("#7FA8FF")
+		"syncopator": return Color("#7CFF6B")
+		"twins": return rest_orange
+		"metronome": return Color("#FF4D8D")
+	return hero_yellow
+
+func aura_power() -> float:
+	var p := aura_flare
+	if character_type == "clap":
+		p += clampf((float(GameState.combo) - 4.0) / 20.0, 0.0, 1.2)
+	elif character_type != "beats":
+		p += 0.22 # ticked rivals always hum a little
+	return clampf(p, 0.0, 1.6)
+
+## 1.0 right on the beat, falling to 0 by the next one.
+func beat_pulse() -> float:
+	var b: float = aura_time * 1.6
+	if Conductor.get("is_playing"):
+		b = float(Conductor.get("current_beat_float"))
+	var f := b - floorf(b)
+	return pow(1.0 - f, 3.0)
+
+func _fx_process(delta: float) -> void:
+	aura_time += delta
+	if is_echo:
+		return
+	_update_echo(delta)
+	aura_flare = move_toward(aura_flare, 0.0, delta * 1.1)
+	var power := aura_power()
+
+	# Little music notes drifting up from the ring
+	if power > 0.15:
+		note_timer -= delta * (0.5 + power * 2.0)
+		if note_timer <= 0.0:
+			note_timer = 0.16
+			var side := -1.0 if randf() < 0.5 else 1.0
+			_spawn({"kind": "note", "pos": Vector2(side * randf_range(40, 70), randf_range(-10, 60)),
+				"vel": Vector2(side * randf_range(5, 15), randf_range(-60, -95)), "life": randf_range(0.9, 1.4),
+				"size": randf_range(0.7, 1.0) * (0.8 + power * 0.3), "rot": randf_range(-0.3, 0.3), "color": aura_color().lightened(0.25)})
+
+	# Beat-count stickers at full power: 1, 2, 3, 4...
+	if power > 0.85:
+		sticker_timer -= delta
+		if sticker_timer <= 0.0:
+			sticker_timer = 0.6
+			sticker_count = sticker_count % 4 + 1
+			var side := -1.0 if sticker_count % 2 == 1 else 1.0
+			_spawn({"kind": "sticker", "text": str(sticker_count),
+				"pos": Vector2(side * randf_range(72, 92), randf_range(-60, 0)),
+				"vel": Vector2(side * 10.0, -40.0), "life": 1.1, "size": 16.0 + power * 4.0,
+				"rot": side * randf_range(0.08, 0.2), "color": aura_color()})
+
+	var alive: Array = []
+	for p in fx_particles:
+		p["life"] -= delta
+		if p["life"] <= 0.0:
+			continue
+		p["pos"] += p["vel"] * delta
+		match p["kind"]:
+			"chevron", "wave":
+				p["vel"] *= pow(0.05, delta)
+			"flat":
+				p["vel"] += Vector2(0, 260) * delta
+		alive.append(p)
+	fx_particles = alive
+	if power > 0.01 or not fx_particles.is_empty():
+		queue_redraw()
+
+func _spawn(p: Dictionary) -> void:
+	if fx_particles.size() >= FX_MAX_PARTICLES:
+		fx_particles.pop_front()
+	p["max_life"] = p["life"]
+	fx_particles.append(p)
+
+func _dir_vec(dir: String) -> Vector2:
+	match dir:
+		"left": return Vector2(-1, 0)
+		"right": return Vector2(1, 0)
+		"down": return Vector2(0, 1)
+	return Vector2(0, -1)
+
+func fx_hit_burst(dir: String) -> void:
+	if is_echo:
+		return
+	_echo_repeat(dir)
+	aura_flare = minf(aura_flare + 0.45, 1.0)
+	var d := _dir_vec(dir)
+	var lane: Color = LANE_COLORS.get(dir, hero_yellow)
+	var power := aura_power()
+	var origin := d * 34.0 + Vector2(0, -10)
+	# A train of arrow chevrons in the lane colour, more when powered up
+	var count := 2 if power < 0.85 else 3
+	for i in range(count):
+		_spawn({"kind": "chevron", "pos": origin - d * float(i) * 16.0, "vel": d * (520.0 - float(i) * 60.0),
+			"life": 0.32, "size": 13.0 - float(i), "dir": d, "color": lane})
+	# Speaker sound waves
+	for i in range(3):
+		_spawn({"kind": "wave", "pos": origin, "vel": d * 40.0, "life": 0.28 + float(i) * 0.08,
+			"size": 14.0 + float(i) * 10.0, "dir": d, "color": aura_color()})
+	# A couple of notes scatter off the hit
+	for i in range(2):
+		var a := randf_range(-1.0, 1.0)
+		_spawn({"kind": "note", "pos": origin + d * 30.0, "vel": (d.rotated(a) * randf_range(90, 150)) + Vector2(0, -40),
+			"life": 0.6, "size": 0.8, "rot": randf_range(-0.4, 0.4), "color": lane.lightened(0.3)})
+
+func fx_miss_puff() -> void:
+	if is_echo:
+		return
+	_echo_repeat("miss")
+	aura_flare = maxf(aura_flare - 0.4, 0.0)
+	_spawn({"kind": "scratch", "pos": Vector2(0, -30), "vel": Vector2.ZERO, "life": 0.35, "size": 1.0, "color": Color(0.75, 0.75, 0.85)})
+	_spawn({"kind": "flat", "pos": Vector2(randf_range(-20, 20), -80), "vel": Vector2(randf_range(-30, 30), -60),
+		"life": 0.8, "size": 1.0, "rot": 0.0, "color": Color(0.6, 0.6, 0.72)})
+
+## Vinyl disc under the character's feet: spins, and pulses on the beat.
+func draw_power_aura() -> void:
+	var power := aura_power()
+	if power <= 0.15 or is_echo:
+		return
+	var col := aura_color()
+	var a := clampf(power, 0.0, 1.0)
+	var pulse := beat_pulse()
+	var c := Vector2(0, 92)
+	var r := Vector2(74.0, 17.0) * (1.0 + pulse * 0.06 * a)
+	draw_ellipse_shape(c, r, Color(0.05, 0.05, 0.09, 0.75 * a))
+	# Grooves
+	for k in range(1, 5):
+		var f := 1.0 - float(k) * 0.16
+		var g := PackedVector2Array()
+		for i in range(33):
+			var ang := float(i) / 32.0 * TAU
+			g.append(c + Vector2(cos(ang) * r.x * f, sin(ang) * r.y * f))
+		draw_polyline(g, Color(1, 1, 1, 0.10 * a), 1.0)
+	# Coloured label
+	draw_ellipse_shape(c, r * 0.32, Color(col.r, col.g, col.b, 0.9 * a))
+	draw_ellipse_shape(c, r * 0.07, Color(0.05, 0.05, 0.09, a))
+	# Spinning highlight
+	var spin := aura_time * 4.0
+	var hl := Color(1, 1, 1, 0.35 * a)
+	for k in [0.0, PI]:
+		var ang: float = spin + k
+		draw_line(c + Vector2(cos(ang) * r.x * 0.4, sin(ang) * r.y * 0.4), c + Vector2(cos(ang) * r.x * 0.92, sin(ang) * r.y * 0.92), hl, 2.0)
+	# Rim glow on the beat
+	var rim := PackedVector2Array()
+	for i in range(41):
+		var ang := float(i) / 40.0 * TAU
+		rim.append(c + Vector2(cos(ang) * r.x, sin(ang) * r.y))
+	draw_polyline(rim, Color(col.r, col.g, col.b, (0.35 + 0.6 * pulse) * a), 2.5)
+
+func draw_note_shape(pos: Vector2, s: float, rot: float, col: Color) -> void:
+	draw_set_transform(size / 2.0 + pos, rot, Vector2(s, s))
+	var ink := Color(ink_color.r, ink_color.g, ink_color.b, col.a)
+	draw_line(Vector2(5, 0), Vector2(5, -18), ink, 4.0)
+	draw_line(Vector2(5, -18), Vector2(13, -11), ink, 4.0)
+	draw_line(Vector2(5, 0), Vector2(5, -18), col, 2.0)
+	draw_line(Vector2(5, -18), Vector2(12, -12), col, 2.0)
+	draw_ellipse_shape(Vector2(0, 1), Vector2(7.5, 5.5), ink)
+	draw_ellipse_shape(Vector2(0, 1), Vector2(5.5, 3.8), col)
+	draw_set_transform(size / 2.0, 0.0, Vector2.ONE)
+
+## Particles drawn in front, in un-squashed local space around the character's centre.
+func draw_fx_particles() -> void:
+	var font = ThemeDB.fallback_font
+	for p in fx_particles:
+		var t: float = p["life"] / p["max_life"] # 1 -> 0
+		var col: Color = p["color"]
+		var pos: Vector2 = p["pos"]
+		match p["kind"]:
+			"note":
+				col.a = minf(1.0, t * 1.6)
+				draw_note_shape(pos + Vector2(sin(aura_time * 6.0 + pos.y * 0.1) * 3.0, 0), p["size"], p["rot"], col)
+			"chevron":
+				var d: Vector2 = p["dir"]
+				var perp := Vector2(-d.y, d.x)
+				var s: float = p["size"]
+				var pts := PackedVector2Array([pos - d * s * 0.6 + perp * s, pos + d * s * 0.6, pos - d * s * 0.6 - perp * s])
+				draw_polyline(pts, Color(ink_color.r, ink_color.g, ink_color.b, t), 9.0)
+				col.a = t
+				draw_polyline(pts, col, 5.5)
+			"wave":
+				var d: Vector2 = p["dir"]
+				var grow: float = p["size"] + (1.0 - t) * 30.0
+				col.a = t * 0.9
+				draw_arc(pos, grow, d.angle() - 0.7, d.angle() + 0.7, 12, col, 3.0)
+			"scratch":
+				col.a = t
+				var zig := PackedVector2Array()
+				for i in range(8):
+					zig.append(pos + Vector2(-36 + i * 10, (6.0 if i % 2 == 0 else -6.0) * (0.5 + t)))
+				draw_polyline(zig, Color(ink_color.r, ink_color.g, ink_color.b, t), 6.0)
+				draw_polyline(zig, col, 3.0)
+			"flat":
+				col.a = t
+				p["rot"] = float(p["rot"]) + 0.08
+				draw_set_transform(size / 2.0 + pos, p["rot"], Vector2.ONE)
+				var ink := Color(ink_color.r, ink_color.g, ink_color.b, t)
+				draw_line(Vector2(-4, -16), Vector2(-4, 6), ink, 4.0)
+				draw_arc(Vector2(0, 2), 5.0, -PI / 2.0, PI / 2.0, 10, ink, 4.0)
+				draw_line(Vector2(-4, -16), Vector2(-4, 6), col, 2.0)
+				draw_arc(Vector2(0, 2), 5.0, -PI / 2.0, PI / 2.0, 10, col, 2.0)
+				draw_set_transform(size / 2.0, 0.0, Vector2.ONE)
+			"sticker":
+				# A little rhythm-tile sticker with the beat count on it
+				var pop := 1.0 + maxf(0.0, (t - 0.85) / 0.15) * 0.4
+				var alpha := minf(1.0, t * 2.5)
+				var s: float = p["size"]
+				draw_set_transform(size / 2.0 + pos, p["rot"], Vector2(pop, pop))
+				var rect := Rect2(-s, -s, s * 2.0, s * 2.0)
+				draw_rect_rounded(Rect2(rect.position + Vector2(2, 3), rect.size), 6.0, Color(0, 0, 0, 0.3 * alpha))
+				draw_rect_rounded(rect, 6.0, Color(paper_white.r, paper_white.g, paper_white.b, alpha))
+				draw_rect_rounded_outline(rect, 6.0, Color(col.r, col.g, col.b, alpha), 3.0)
+				draw_rect(Rect2(-s, -s, s * 2.0, 5.0), Color(col.r, col.g, col.b, alpha))
+				var fs := int(s * 1.4)
+				var tw: float = font.get_string_size(p["text"], HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+				draw_string(font, Vector2(-tw / 2.0, s * 0.55), p["text"], HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(ink_color.r, ink_color.g, ink_color.b, alpha))
+				draw_set_transform(size / 2.0, 0.0, Vector2.ONE)

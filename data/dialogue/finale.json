@@ -1,0 +1,84 @@
+{
+  "intro": [
+    {
+      "speaker": "Narrator",
+      "text": "The top of the Great Metronome. Everyone Clap woke up is waiting at the bottom of the tower.",
+      "shot": "tower"
+    },
+    {
+      "speaker": "The Metronome",
+      "text": "CLAP. YOU ARE UNDOING MY WORK. HUMANS ARE OFF THE BEAT. I AM MAKING THEM PERFECT.",
+      "flash": "#FF4D8D",
+      "shake": true
+    },
+    {
+      "speaker": "Clap",
+      "text": "Being a little off is what makes it music! That's called groove!",
+      "pose": "cheer",
+      "shot": "close"
+    },
+    {
+      "speaker": "The Metronome",
+      "text": "GROOVE IS AN ERROR. IF YOU CAN ECHO ME PERFECTLY, I WILL STOP. YOU CANNOT.",
+      "shake": true,
+      "shot": "close"
+    },
+    {
+      "speaker": "Beats",
+      "text": "Clap! Everyone chipped in and bought me a real drum. I'll count you in. Ready?"
+    },
+    {
+      "speaker": "Beats",
+      "text": "One, two, three, four!",
+      "flash": "#F7D117"
+    }
+  ],
+  "win": [
+    {
+      "speaker": "The Metronome",
+      "text": "YOU ECHOED ME. BUT YOUR TIMING WAS NOT PERFECT. AND YET IT SOUNDED... GOOD?",
+      "shake": true
+    },
+    {
+      "speaker": "The Metronome",
+      "text": "I DO NOT UNDERSTAND. I WANT TO UNDERSTAND."
+    },
+    {
+      "speaker": "Narrator",
+      "text": "The pendulum stops, then starts again with a little swing in it. The ticking spell is gone.",
+      "shot": "tower",
+      "flash": "#FFF8E7"
+    },
+    {
+      "speaker": "Narrator",
+      "text": "Down in the street, the bus doors open, Swing Queen sings, and the Twins count together.",
+      "shot": "wide"
+    },
+    {
+      "speaker": "Beats",
+      "text": "You did it, Clap! Worst dancer in the city saves the city!"
+    },
+    {
+      "speaker": "Clap",
+      "text": "Hey. Second worst. I've seen the Straight Man dance.",
+      "pose": "cheer"
+    }
+  ],
+  "lose": [
+    {
+      "speaker": "The Metronome",
+      "text": "IMPERFECT. AS EXPECTED. TRY AGAIN, HUMAN."
+    }
+  ],
+  "taunts": {
+    "miss": [
+      "ERROR.",
+      "IMPERFECT.",
+      "CORRECTING..."
+    ],
+    "streak": [
+      "UNEXPECTED ACCURACY.",
+      "WHY DOES THAT FEEL... NICE?"
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "intro": [
+    {
+      "speaker": "Narrator",
+      "text": "The Night Market. The Syncopator has always been a prankster. Getting ticked only made it worse: now he can ONLY play off the beat."
+    },
+    {
+      "speaker": "The Syncopator",
+      "text": "Heeey, friends! Love the drum, little guy. Mine now!",
+      "pose": "up",
+      "shot": "close"
+    },
+    {
+      "speaker": "Narrator",
+      "text": "He snatches Beats' cardboard drum and dances off-beat around the stalls.",
+      "shake": true,
+      "shot": "wide"
+    },
+    {
+      "speaker": "Beats",
+      "text": "H-hey! I can't keep time without it! I can't even find where beat one is!",
+      "shake": true
+    },
+    {
+      "speaker": "The Syncopator",
+      "text": "Want it back? Copy me! Hit the off-beats, and DON'T press on the rests. Hee hee!",
+      "pose": "right"
+    },
+    {
+      "speaker": "Clap",
+      "text": "Hang on, Beats. I'll count for both of us this time.",
+      "pose": "cheer"
+    }
+  ],
+  "win": [
+    {
+      "speaker": "The Syncopator",
+      "text": "Whoa... my head feels like it's back on the beat. Did I take somebody's drum?",
+      "pose": "shock",
+      "flash": "#4E9A5E"
+    },
+    {
+      "speaker": "Beats",
+      "text": "You did. Give it back, please."
+    },
+    {
+      "speaker": "The Syncopator",
+      "text": "Sorry, little guy. Here. Pranks are only funny when you can stop doing them."
+    },
+    {
+      "speaker": "Beats",
+      "text": "Clap, you came back for me. Thank you."
+    },
+    {
+      "speaker": "Clap",
+      "text": "Always. Last stop before the tower: the Twins' clock shop.",
+      "pose": "cheer"
+    }
+  ],
+  "lose": [
+    {
+      "speaker": "The Syncopator",
+      "text": "You pressed on a rest! Classic! Wanna go again?"
+    }
+  ],
+  "taunts": {
+    "miss": [
+      "Psych!",
+      "Nope, it was over THERE!",
+      "Rests mean don't press, buddy!"
+    ],
+    "streak": [
+      "Hey, quit finding my gaps!",
+      "Who told you where the off-beat was?!"
+    ]
+  }
+}

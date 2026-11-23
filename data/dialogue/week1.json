@@ -1,0 +1,70 @@
+{
+  "intro": [
+    {
+      "speaker": "Narrator",
+      "text": "Main Street. The city bus runs exactly on time, but its driver has been ticked. He won't open the doors because that's \"not on the beat.\""
+    },
+    {
+      "speaker": "The Straight Man",
+      "text": "One. Two. Three. Four. Passengers will remain seated. One. Two. Three. Four.",
+      "pose": "down"
+    },
+    {
+      "speaker": "Clap",
+      "text": "Sir? Your passengers have been on this bus for nine hours.",
+      "pose": "shock"
+    },
+    {
+      "speaker": "The Straight Man",
+      "text": "Only quarter notes and eighth notes are allowed. You look wobbly. Wobbly is not allowed.",
+      "shot": "close"
+    },
+    {
+      "speaker": "Beats",
+      "text": "He's ticked! Copy his rhythm perfectly and his loop will break."
+    }
+  ],
+  "win": [
+    {
+      "speaker": "Narrator",
+      "text": "The clock glow fades from his eyes. He blinks.",
+      "flash": "#FFF8E7"
+    },
+    {
+      "speaker": "The Straight Man",
+      "text": "Where am I? Why are there so many angry people on my bus?",
+      "pose": "shock",
+      "shot": "close"
+    },
+    {
+      "speaker": "Clap",
+      "text": "Long story. The Metronome ticked you. We're waking everyone up."
+    },
+    {
+      "speaker": "The Straight Man",
+      "text": "Then I'm coming with you. Punctually. Doors opening!",
+      "pose": "cheer"
+    },
+    {
+      "speaker": "Beats",
+      "text": "One person awake! Next up is the jazz club. I can hear the same triplet over and over from here."
+    }
+  ],
+  "lose": [
+    {
+      "speaker": "The Straight Man",
+      "text": "Off the beat. Please remain seated."
+    }
+  ],
+  "taunts": {
+    "miss": [
+      "Off schedule.",
+      "That note was not on the timetable.",
+      "Please remain seated."
+    ],
+    "streak": [
+      "One. Two. Three... wait, what was four?",
+      "My loop is... slipping."
+    ]
+  }
+}

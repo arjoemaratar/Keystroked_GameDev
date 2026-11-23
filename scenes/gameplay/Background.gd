@@ -17,6 +17,17 @@ var wood_brown: Color = Color("#8B5E3C")
 var star_coords: Array[Vector2] = []
 var star_phases: Array[float] = []
 
+# Story: rivals you've already beaten cheer from the front of the stage.
+const CROWD_FANS: Array = [
+	{"level": "tutorial", "name": "Beats", "color": Color("#C49A45")},
+	{"level": "week1", "name": "Straight Man", "color": Color("#C85A6E")},
+	{"level": "week2", "name": "Swing Queen", "color": Color("#4A7DBF")},
+	{"level": "week3", "name": "Syncopator", "color": Color("#4E9A5E")},
+	{"level": "week4", "name": "Tri & Quad", "color": Color("#D17B4A")},
+]
+const LEVEL_ORDER: Array = ["tutorial", "week1", "week2", "week3", "week4", "finale"]
+var crowd: Array = []
+
 func _ready() -> void:
 	# Generate deterministic star coordinates
 	var rng = RandomNumberGenerator.new()
@@ -24,6 +35,19 @@ func _ready() -> void:
 	for i in range(32):
 		star_coords.append(Vector2(rng.randf_range(30, 1250), rng.randf_range(25, 260)))
 		star_phases.append(rng.randf_range(0.0, TAU))
+	build_crowd()
+
+func build_crowd() -> void:
+	crowd.clear()
+	var current: String = GameState.selected_level_id
+	var cur_idx: int = LEVEL_ORDER.find(current)
+	for fan in CROWD_FANS:
+		var idx: int = LEVEL_ORDER.find(fan["level"])
+		# Only rivals from earlier stages that you've beaten. Beats always tags along after the tutorial.
+		if idx < 0 or cur_idx < 0 or idx >= cur_idx:
+			continue
+		if fan["level"] == "tutorial" or GameState.completed_levels.has(fan["level"]):
+			crowd.append(fan)
 
 func _process(delta: float) -> void:
 	anim_time += delta
@@ -56,6 +80,9 @@ func _draw() -> void:
 
 	# 8. Warm Beat Spotlights illuminating Player and Opponent
 	draw_stage_spotlights(w, h)
+
+	# 9. Beaten rivals cheering at the front of the stage
+	draw_crowd(w, h)
 
 func draw_sky_gradient(w: float, h: float) -> void:
 	# Subtle 2-tone sky band
@@ -380,3 +407,38 @@ func draw_rect_rounded_outline(r: Rect2, radius: float, col: Color, width: float
 	style.border_width_bottom = int(width)
 	style.border_color = col
 	style.draw(get_canvas_item(), r)
+
+func draw_crowd(w: float, h: float) -> void:
+	if crowd.is_empty():
+		return
+	var font = ThemeDB.fallback_font
+	var spacing: float = 120.0
+	var start_x: float = w / 2.0 - spacing * float(crowd.size() - 1) / 2.0
+	for i in range(crowd.size()):
+		var fan: Dictionary = crowd[i]
+		var col: Color = fan["color"]
+		var bob: float = absf(sin(anim_time * 3.4 + float(i) * 1.3)) * 7.0
+		var base := Vector2(start_x + spacing * float(i), h - 8.0)
+		var head := base + Vector2(0, -44.0 - bob)
+
+		# Body (peeking up from below the stage edge)
+		var body := Rect2(base.x - 20, base.y - 26 - bob, 40, 34)
+		draw_rect_rounded(body, 10.0, col.darkened(0.25))
+		draw_rect_rounded_outline(body, 10.0, dark_navy, 2.5)
+
+		# Waving noodle arms
+		var wave: float = sin(anim_time * 6.0 + float(i)) * 8.0
+		draw_line(base + Vector2(-18, -20 - bob), head + Vector2(-30, -18 + wave), dark_navy, 4.0)
+		draw_line(base + Vector2(18, -20 - bob), head + Vector2(30, -18 - wave), dark_navy, 4.0)
+
+		# Head with happy face
+		draw_circle(head, 20.0, col)
+		draw_arc(head, 20.0, 0, TAU, 24, dark_navy, 2.5)
+		draw_circle(head + Vector2(-7, -3), 2.6, dark_navy)
+		draw_circle(head + Vector2(7, -3), 2.6, dark_navy)
+		draw_arc(head + Vector2(0, 4), 7.0, 0.2, PI - 0.2, 10, dark_navy, 2.2)
+
+		# Name tag
+		var name_text: String = fan["name"]
+		var sz = font.get_string_size(name_text, HORIZONTAL_ALIGNMENT_CENTER, -1, 11)
+		draw_string(font, Vector2(base.x - sz.x / 2.0, base.y + 4), name_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, paper_white)
