@@ -17,7 +17,7 @@ var paper_white: Color = Color("#FFF8E7")
 var ink_color: Color = Color("#1B1B2F")
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(620, 500)
+	custom_minimum_size = Vector2(640, 520)
 
 func load_chart_rows(chart_rows: Array) -> void:
 	rows_data = chart_rows
@@ -41,16 +41,34 @@ func render_page() -> void:
 		row_hbox.add_theme_constant_override("separation", 14)
 		row_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 
-		# Row Banner Label
+		# Styled Row Banner Badge (pill ribbon badge)
+		var badge_panel = PanelContainer.new()
+		badge_panel.custom_minimum_size = Vector2(105, 34)
+		var b_style = StyleBoxFlat.new()
+		b_style.corner_radius_top_left = 8
+		b_style.corner_radius_top_right = 8
+		b_style.corner_radius_bottom_left = 8
+		b_style.corner_radius_bottom_right = 8
+		b_style.border_width_left = 2
+		b_style.border_width_top = 2
+		b_style.border_width_right = 2
+		b_style.border_width_bottom = 2
+		b_style.border_color = ink_color
+		b_style.bg_color = Color("#24243C") if phase == "listen" else hero_yellow.darkened(0.65)
+		b_style.shadow_color = Color(0, 0, 0, 0.35)
+		b_style.shadow_size = 4
+		b_style.shadow_offset = Vector2(2, 2)
+		badge_panel.add_theme_stylebox_override("panel", b_style)
+
 		var label = Label.new()
-		var phase_text = "LISTEN" if phase == "listen" else "CLAP!"
-		label.text = "R%d: %s" % [r + 1, phase_text]
-		label.custom_minimum_size = Vector2(95, 0)
+		var phase_text = "👂 LISTEN" if phase == "listen" else "👏 CLAP!"
+		label.text = "R%d %s" % [r + 1, phase_text]
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		label.add_theme_font_size_override("font_size", 14)
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.add_theme_font_size_override("font_size", 12)
 		label.add_theme_color_override("font_color", hero_yellow if phase == "play" else paper_white)
-		row_hbox.add_child(label)
+		badge_panel.add_child(label)
+		row_hbox.add_child(badge_panel)
 
 		var row_tiles = []
 		for c in range(tiles_arr.size()):
@@ -77,7 +95,6 @@ func render_page() -> void:
 		grid_container.add_child(row_hbox)
 
 func update_active(row_idx: int, col_idx: int, beat_progress: float, is_play_phase: bool) -> void:
-	# Check page paging
 	var page = int(floor(float(row_idx) / float(ROWS_PER_PAGE)))
 	var expected_offset = page * ROWS_PER_PAGE
 	if expected_offset != displayed_row_offset and expected_offset < rows_data.size():

@@ -10,9 +10,20 @@ var is_play_phase: bool = false
 var playhead_progress: float = 0.0 # 0.0 to 1.0 within this beat
 var scale_factor: float = 1.0
 
+# Animation effects
+var hit_pop_scale: float = 1.0
+var hit_flash_alpha: float = 0.0
+var pop_ring_radius: float = 0.0
+var pop_ring_alpha: float = 0.0
+var idle_anim_time: float = 0.0
+
 var ink_color: Color = Color("#1B1B2F")
 var paper_white: Color = Color("#FFF8E7")
+var paper_tint: Color = Color("#FFFDF5")
 var hero_yellow: Color = Color("#F7D117")
+var notebook_rule: Color = Color(0.85, 0.90, 0.96, 0.75)
+var notebook_margin: Color = Color(0.98, 0.65, 0.65, 0.70)
+var gold_color: Color = Color("#FFD000")
 
 const DIR_COLORS = {
 	"left": Color("#C85A6E"),
@@ -32,8 +43,8 @@ const TYPE_SYMBOLS = {
 }
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(104, 114)
-	size = Vector2(104, 114)
+	custom_minimum_size = Vector2(106, 116)
+	size = Vector2(106, 116)
 	pivot_offset = size / 2.0
 
 func setup(t_type: String, p_dir: String, hits_data: Array = []) -> void:
@@ -45,7 +56,6 @@ func setup(t_type: String, p_dir: String, hits_data: Array = []) -> void:
 	if hits_data.size() > 0:
 		sub_hits = hits_data.duplicate()
 	else:
-		# Default fallback based on type
 		match tile_type:
 			"E2":
 				sub_hits = [
@@ -85,6 +95,9 @@ func reset_state() -> void:
 	is_active = false
 	playhead_progress = 0.0
 	scale_factor = 1.0
+	hit_pop_scale = 1.0
+	hit_flash_alpha = 0.0
+	pop_ring_alpha = 0.0
 	queue_redraw()
 
 func set_active(active: bool, play_phase: bool) -> void:
@@ -92,8 +105,8 @@ func set_active(active: bool, play_phase: bool) -> void:
 	is_play_phase = play_phase
 	if active:
 		var tween = create_tween()
-		scale_factor = 1.1
-		tween.tween_property(self, "scale_factor", 1.0, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		scale_factor = 1.14
+		tween.tween_property(self, "scale_factor", 1.0, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	queue_redraw()
 
 func set_progress(p: float) -> void:
@@ -103,85 +116,174 @@ func set_progress(p: float) -> void:
 func mark_sub_hit(index: int, rating: String) -> void:
 	if index >= 0 and index < sub_states.size():
 		sub_states[index] = 1 if (rating == "Perfect" or rating == "Good") else 2
+
+		# Juicy pop animation
+		hit_flash_alpha = 0.7
+		pop_ring_radius = 8.0
+		pop_ring_alpha = 1.0
+		hit_pop_scale = 1.22
+
 		var tween = create_tween()
-		scale_factor = 1.18
-		tween.tween_property(self, "scale_factor", 1.0, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "hit_pop_scale", 1.0, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.parallel().tween_property(self, "hit_flash_alpha", 0.0, 0.2)
+		tween.parallel().tween_property(self, "pop_ring_radius", 36.0, 0.22)
+		tween.parallel().tween_property(self, "pop_ring_alpha", 0.0, 0.22)
 		queue_redraw()
 
 func pulse_listen(index: int) -> void:
 	if index >= 0 and index < sub_states.size():
 		sub_states[index] = 1
+
+	hit_flash_alpha = 0.5
+	hit_pop_scale = 1.15
 	var tween = create_tween()
-	scale_factor = 1.14
-	tween.tween_property(self, "scale_factor", 1.0, 0.12)
+	tween.tween_property(self, "hit_pop_scale", 1.0, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(self, "hit_flash_alpha", 0.0, 0.18)
 	queue_redraw()
 
+func _process(delta: float) -> void:
+	idle_anim_time += delta
+	if is_active or hit_flash_alpha > 0.01:
+		queue_redraw()
+
 func _draw() -> void:
+	var total_scale = scale_factor * hit_pop_scale
 	var rect = Rect2(Vector2.ZERO, size)
 	var center = rect.size / 2.0
-	draw_set_transform(center * (1.0 - scale_factor), 0.0, Vector2(scale_factor, scale_factor))
+	draw_set_transform(center * (1.0 - total_scale), 0.0, Vector2(total_scale, total_scale))
 
-	# Paper Cut Drop Shadow (down & right 5px)
-	var shadow_rect = Rect2(Vector2(5, 5), rect.size)
-	draw_rect_rounded(shadow_rect, 12.0, Color(0.1, 0.1, 0.18, 0.35))
-
-	# Base card color
 	var dir_col = DIR_COLORS.get(primary_dir, Color("#C85A6E"))
-	var bg_col = paper_white
+
+	# 1. Soft Paper Drop Shadow
+	var shadow_rect = Rect2(Vector2(5, 6), rect.size)
+	draw_rect_rounded(shadow_rect, 14.0, Color(0.1, 0.1, 0.18, 0.38))
+
+	# 2. Glowing Golden Active Border Aura
 	if is_active:
-		bg_col = hero_yellow.lerp(paper_white, 0.4)
+		var aura_col = hero_yellow
+		aura_col.a = 0.4 + sin(idle_anim_time * 8.0) * 0.15
+		var aura_rect = Rect2(Vector2(-3, -3), rect.size + Vector2(6, 6))
+		draw_rect_rounded(aura_rect, 16.0, aura_col)
 
-	draw_rect_rounded(rect, 12.0, bg_col)
+	# 3. Card Base: Warm Cream Notebook Paper
+	var bg_col = paper_tint
+	if is_active:
+		bg_col = hero_yellow.lerp(paper_white, 0.65)
+	draw_rect_rounded(rect, 14.0, bg_col)
 
-	# Direction Header Strip
-	var header_rect = Rect2(0, 0, rect.size.x, 24)
-	draw_rect_rounded_top(header_rect, 12.0, dir_col)
+	# 4. Realistic Ruled Notebook Lines Texture
+	draw_notebook_texture(rect)
 
-	# Thick Paper Cut Outline (3.5px)
-	var outline_col = ink_color
-	draw_rect_rounded_outline(rect, 12.0, outline_col, 3.5)
+	# 5. Bottom-Right Paper Fold / Peel Corner
+	draw_folded_paper_corner(rect)
 
-	# Header text: Tile Type & Notation Symbol (e.g. "Q ♩" or "E2 ♫")
+	# 6. Direction Header Strip
+	var header_h = 26.0
+	var header_rect = Rect2(0, 0, rect.size.x, header_h)
+	draw_rect_rounded_top(header_rect, 14.0, dir_col)
+
+	# Stitched Perforation line under header
+	draw_dashes(Vector2(6, header_h), Vector2(rect.size.x - 6, header_h), ink_color.lerp(paper_white, 0.4), 1.5, 3.0, 3.0)
+
+	# 7. Washi Tape Strip at Top (playful craft detail)
+	draw_washi_tape(rect, dir_col)
+
+	# 8. Thick Comic Outline (3.5px ink border)
+	draw_rect_rounded_outline(rect, 14.0, ink_color, 3.5)
+
+	# 9. Header Text & Notation Stamp Badge
+	draw_header_badge(rect, dir_col)
+
+	# 10. Center Arrow Glyph (with 3D Paper Bevel) or Rest Face
+	var center_glyph_pos = Vector2(rect.size.x / 2.0, 64.0)
+	if primary_dir == "rest":
+		draw_rest_face(center_glyph_pos)
+	else:
+		draw_tactile_arrow(center_glyph_pos, primary_dir, dir_col)
+
+	# 11. Bottom Sub-hit Rhythm Beads / Stamps
+	draw_sub_hit_beads(rect)
+
+	# 12. Diagonal Glossy Sticker Sheen across card
+	draw_glossy_sticker_sheen(rect)
+
+	# 13. Hit Flash / Shockwave Ring
+	if pop_ring_alpha > 0.01:
+		var ring_col = hero_yellow
+		ring_col.a = pop_ring_alpha
+		draw_arc(center_glyph_pos, pop_ring_radius, 0, TAU, 24, ring_col, 3.0)
+
+	# 14. Luminous Scanning Laser Playhead
+	if is_active:
+		draw_laser_playhead(rect)
+
+func draw_notebook_texture(r: Rect2) -> void:
+	# Horizontal faint blue ruled lines
+	for ly in range(36, int(r.size.y) - 20, 14):
+		draw_line(Vector2(8, ly), Vector2(r.size.x - 8, ly), notebook_rule, 1.2)
+
+	# Vertical red left margin line
+	draw_line(Vector2(20, 27), Vector2(20, r.size.y - 8), notebook_margin, 1.5)
+
+func draw_folded_paper_corner(r: Rect2) -> void:
+	var fold_size = 14.0
+	var br = r.size
+	# Paper underside triangle shadow
+	var fold_shadow_pts = PackedVector2Array([
+		Vector2(br.x - fold_size - 2, br.y),
+		Vector2(br.x, br.y - fold_size - 2),
+		Vector2(br.x - fold_size - 2, br.y - fold_size - 2)
+	])
+	draw_colored_polygon(fold_shadow_pts, Color(0.1, 0.1, 0.15, 0.2))
+
+	# Paper underside flap
+	var flap_pts = PackedVector2Array([
+		Vector2(br.x - fold_size, br.y),
+		Vector2(br.x, br.y - fold_size),
+		Vector2(br.x - fold_size, br.y - fold_size)
+	])
+	draw_colored_polygon(flap_pts, paper_white.darkened(0.12))
+	draw_polyline(flap_pts + PackedVector2Array([flap_pts[0]]), ink_color, 1.8)
+
+func draw_washi_tape(r: Rect2, theme_col: Color) -> void:
+	# Cute decorative patterned tape strip pinning top of card
+	var tw = 38.0
+	var th = 12.0
+	var tx = (r.size.x - tw) / 2.0
+	var ty = -5.0
+	var tape_rect = Rect2(tx, ty, tw, th)
+
+	# Tape shadow
+	draw_rect_rounded(Rect2(tx + 1, ty + 2, tw, th), 3.0, Color(0.1, 0.1, 0.15, 0.25))
+
+	# Translucent Tape body
+	var t_col = theme_col.lightened(0.4)
+	t_col.a = 0.85
+	draw_rect_rounded(tape_rect, 3.0, t_col)
+
+	# Diagonal micro-stripes on tape
+	for sx in range(int(tx) + 4, int(tx + tw) - 2, 7):
+		draw_line(Vector2(sx, ty + 1), Vector2(sx + 5, ty + th - 1), paper_white, 1.5)
+
+	# Tape outline
+	draw_rect_rounded_outline(tape_rect, 3.0, ink_color, 1.5)
+
+func draw_header_badge(r: Rect2, theme_col: Color) -> void:
 	var font = ThemeDB.fallback_font
 	var not_sym = TYPE_SYMBOLS.get(tile_type, "♩")
 	var header_str = "%s  %s" % [tile_type, not_sym]
-	var h_size = font.get_string_size(header_str, HORIZONTAL_ALIGNMENT_CENTER, -1, 11)
-	draw_string(font, Vector2((rect.size.x - h_size.x) / 2.0, 16), header_str, HORIZONTAL_ALIGNMENT_CENTER, -1, 11, paper_white)
 
-	# Center Arrow or Rest Face
-	var center_arrow_pos = Vector2(rect.size.x / 2.0, 62.0)
-	if primary_dir == "rest":
-		draw_rest_face(center_arrow_pos)
-	else:
-		draw_arrow_glyph(center_arrow_pos, primary_dir, dir_col)
+	# Embossed white pill badge in header
+	var b_size = font.get_string_size(header_str, HORIZONTAL_ALIGNMENT_CENTER, -1, 11)
+	var badge_w = b_size.x + 16.0
+	var badge_x = (r.size.x - badge_w) / 2.0
+	var badge_rect = Rect2(badge_x, 4, badge_w, 18)
 
-	# Bottom Sub-hit Markers
-	if sub_hits.size() > 1:
-		var dot_y = rect.size.y - 12.0
-		var usable_w = rect.size.x - 24.0
-		for i in range(sub_hits.size()):
-			var h_info = sub_hits[i]
-			var offset_val = float(h_info.get("offset", 0.0))
-			var sub_dir = str(h_info.get("dir", primary_dir))
-			var dot_x = 12.0 + (offset_val * usable_w)
-			var dot_pos = Vector2(dot_x, dot_y)
-			var state = sub_states[i] if i < sub_states.size() else 0
+	draw_rect_rounded(badge_rect, 6.0, ink_color.darkened(0.2))
+	draw_rect_rounded_outline(badge_rect, 6.0, paper_white.lerp(theme_col, 0.4), 1.2)
+	draw_string(font, Vector2((r.size.x - b_size.x) / 2.0, 17), header_str, HORIZONTAL_ALIGNMENT_CENTER, -1, 11, paper_white)
 
-			var dot_col = DIR_COLORS.get(sub_dir, ink_color)
-			if state == 1:
-				dot_col = Color("#38B000")
-			elif state == 2:
-				dot_col = Color("#D90429")
-
-			draw_circle(dot_pos, 4.5, dot_col)
-			draw_arc(dot_pos, 4.5, 0, TAU, 16, ink_color, 1.5)
-
-	# Sweeping Playhead Line
-	if is_active:
-		var sweep_x = rect.size.x * playhead_progress
-		draw_line(Vector2(sweep_x, 25), Vector2(sweep_x, rect.size.y - 3), hero_yellow, 3.0)
-
-func draw_arrow_glyph(center: Vector2, dir: String, fill_col: Color) -> void:
+func draw_tactile_arrow(center: Vector2, dir: String, fill_col: Color) -> void:
 	var angle = 0.0
 	match dir:
 		"left": angle = PI
@@ -190,30 +292,143 @@ func draw_arrow_glyph(center: Vector2, dir: String, fill_col: Color) -> void:
 		"right": angle = 0.0
 
 	var points = PackedVector2Array([
-		Vector2(18, 0),
-		Vector2(-4, -15),
-		Vector2(-4, -7),
-		Vector2(-18, -7),
-		Vector2(-18, 7),
-		Vector2(-4, 7),
-		Vector2(-4, 15)
+		Vector2(20, 0),
+		Vector2(-4, -16),
+		Vector2(-4, -8),
+		Vector2(-20, -8),
+		Vector2(-20, 8),
+		Vector2(-4, 8),
+		Vector2(-4, 16)
 	])
 
 	var rotated_pts = PackedVector2Array()
+	var shadow_pts = PackedVector2Array()
 	for pt in points:
-		rotated_pts.append(center + pt.rotated(angle))
+		var rot = pt.rotated(angle)
+		rotated_pts.append(center + rot)
+		shadow_pts.append(center + rot + Vector2(2, 3))
 
-	# Filled arrow with dark outline
+	# Arrow Drop Shadow
+	draw_colored_polygon(shadow_pts, Color(0.1, 0.1, 0.15, 0.28))
+
+	# Arrow Base Fill
 	draw_colored_polygon(rotated_pts, fill_col)
-	draw_polyline(rotated_pts + PackedVector2Array([rotated_pts[0]]), ink_color, 2.5)
+
+	# Inner Highlight Rim along upper edges
+	var hi_col = fill_col.lightened(0.4)
+	for i in range(1, 4):
+		draw_line(rotated_pts[i], rotated_pts[i + 1], hi_col, 2.0)
+
+	# Thick Ink Outline
+	draw_polyline(rotated_pts + PackedVector2Array([rotated_pts[0]]), ink_color, 2.8)
+
+	# Center Pop Star Dot
+	draw_circle(center, 3.2, paper_white)
+	draw_arc(center, 3.2, 0, TAU, 8, ink_color, 1.5)
 
 func draw_rest_face(center: Vector2) -> void:
-	# Cute sleeping comic face
-	draw_circle(center + Vector2(-8, -4), 3.0, ink_color)
-	draw_circle(center + Vector2(8, -4), 3.0, ink_color)
-	draw_arc(center + Vector2(0, 6), 6.0, 0, PI, 10, ink_color, 2.5)
+	# Sleeping comic character face
+	# Closed smiling eye arcs ⌒ ⌒
+	draw_arc(center + Vector2(-9, -2), 5.5, PI + 0.3, TAU - 0.3, 8, ink_color, 2.5)
+	draw_arc(center + Vector2(9, -2), 5.5, PI + 0.3, TAU - 0.3, 8, ink_color, 2.5)
+
+	# Rosy blushing cheeks
+	draw_circle(center + Vector2(-15, 4), 4.0, Color(0.98, 0.55, 0.65, 0.5))
+	draw_circle(center + Vector2(15, 4), 4.0, Color(0.98, 0.55, 0.65, 0.5))
+
+	# Smiling sleeping mouth
+	draw_arc(center + Vector2(0, 6), 6.0, 0.2, PI - 0.2, 10, ink_color, 2.5)
+
+	# Floating animated "zZ" lettering
+	var float_y = sin(idle_anim_time * 3.5) * 2.5
 	var font = ThemeDB.fallback_font
-	draw_string(font, center + Vector2(-12, -14), "zZ", HORIZONTAL_ALIGNMENT_CENTER, -1, 14, DIR_COLORS["rest"])
+	draw_string(font, center + Vector2(-10, -18 + float_y), "zZ", HORIZONTAL_ALIGNMENT_CENTER, -1, 14, DIR_COLORS["rest"])
+
+func draw_sub_hit_beads(r: Rect2) -> void:
+	if sub_hits.size() <= 1:
+		return
+
+	var dot_y = r.size.y - 14.0
+	var usable_w = r.size.x - 28.0
+
+	for i in range(sub_hits.size()):
+		var h_info = sub_hits[i]
+		var offset_val = float(h_info.get("offset", 0.0))
+		var sub_dir = str(h_info.get("dir", primary_dir))
+		var dot_x = 14.0 + (offset_val * usable_w)
+		var dot_pos = Vector2(dot_x, dot_y)
+		var state = sub_states[i] if i < sub_states.size() else 0
+
+		# Bead drop shadow
+		draw_circle(dot_pos + Vector2(1, 1.5), 5.5, Color(0.1, 0.1, 0.15, 0.25))
+
+		match state:
+			1: # Hit! (Gleaming Emerald / Gold Jewel Bead)
+				var hit_col = Color("#38B000")
+				draw_circle(dot_pos, 5.5, hit_col)
+				# Specular shine dot
+				draw_circle(dot_pos + Vector2(-1.5, -1.5), 1.8, paper_white)
+				draw_arc(dot_pos, 5.5, 0, TAU, 14, ink_color, 2.0)
+			2: # Missed (Stamped Red X)
+				draw_circle(dot_pos, 5.0, Color("#D90429"))
+				draw_arc(dot_pos, 5.0, 0, TAU, 12, ink_color, 1.8)
+				# Mini X
+				draw_line(dot_pos + Vector2(-2, -2), dot_pos + Vector2(2, 2), paper_white, 1.5)
+				draw_line(dot_pos + Vector2(2, -2), dot_pos + Vector2(-2, 2), paper_white, 1.5)
+			_: # Pending (Stamped Rhythm Bead)
+				var base_c = DIR_COLORS.get(sub_dir, ink_color)
+				draw_circle(dot_pos, 4.8, base_c.lerp(paper_white, 0.4))
+				draw_arc(dot_pos, 4.8, 0, TAU, 12, ink_color, 1.8)
+				draw_circle(dot_pos, 1.8, ink_color)
+
+func draw_glossy_sticker_sheen(r: Rect2) -> void:
+	# Diagonal white translucent sheen across card (collectible sticker shine)
+	var sheen_col = Color(1.0, 1.0, 1.0, 0.12)
+	var pts = PackedVector2Array([
+		Vector2(10, r.size.y - 10),
+		Vector2(r.size.x - 20, 32),
+		Vector2(r.size.x - 10, 32),
+		Vector2(20, r.size.y - 10)
+	])
+	draw_colored_polygon(pts, sheen_col)
+
+func draw_laser_playhead(r: Rect2) -> void:
+	var sweep_x = r.size.x * playhead_progress
+
+	# Soft laser glow halo
+	var glow_col = hero_yellow
+	glow_col.a = 0.35
+	draw_rect(Rect2(sweep_x - 4, 27, 8, r.size.y - 35), glow_col)
+
+	# Bright laser core beam
+	draw_line(Vector2(sweep_x, 27), Vector2(sweep_x, r.size.y - 8), hero_yellow, 3.2)
+	draw_line(Vector2(sweep_x, 27), Vector2(sweep_x, r.size.y - 8), paper_white, 1.2)
+
+	# Top and Bottom Diamond Playhead Markers
+	draw_diamond(Vector2(sweep_x, 27), 4.5, hero_yellow, ink_color)
+	draw_diamond(Vector2(sweep_x, r.size.y - 8), 4.5, hero_yellow, ink_color)
+
+func draw_diamond(pos: Vector2, r: float, fill_col: Color, out_col: Color) -> void:
+	var pts = PackedVector2Array([
+		pos + Vector2(0, -r),
+		pos + Vector2(r, 0),
+		pos + Vector2(0, r),
+		pos + Vector2(-r, 0)
+	])
+	draw_colored_polygon(pts, fill_col)
+	draw_polyline(pts + PackedVector2Array([pts[0]]), out_col, 1.5)
+
+# Drawing Helpers
+func draw_dashes(from_pos: Vector2, to_pos: Vector2, col: Color, width: float, dash_len: float, gap_len: float) -> void:
+	var total_dist = from_pos.distance_to(to_pos)
+	if total_dist <= 0.001:
+		return
+	var dir = (to_pos - from_pos).normalized()
+	var cur = 0.0
+	while cur < total_dist:
+		var end_pt = min(cur + dash_len, total_dist)
+		draw_line(from_pos + (dir * cur), from_pos + (dir * end_pt), col, width)
+		cur += dash_len + gap_len
 
 func draw_rect_rounded(r: Rect2, radius: float, col: Color) -> void:
 	var style = StyleBoxFlat.new()

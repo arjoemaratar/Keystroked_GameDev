@@ -22,14 +22,20 @@ var lane_x_positions: Array[float] = [360.0, 480.0, 600.0, 720.0]
 var receptor_scales: Dictionary = {"left": 1.0, "down": 1.0, "up": 1.0, "right": 1.0}
 var receptor_press: Dictionary = {"left": false, "down": false, "up": false, "right": false}
 
+# Ripple shockwaves on hit
+var ripple_scales: Dictionary = {"left": 0.0, "down": 0.0, "up": 0.0, "right": 0.0}
+var ripple_alphas: Dictionary = {"left": 0.0, "down": 0.0, "up": 0.0, "right": 0.0}
+
 var active_prompts: Array = []
 var ink_color: Color = Color("#1B1B2F")
 var paper_white: Color = Color("#FFF8E7")
 var hero_yellow: Color = Color("#F7D117")
+var highway_bg: Color = Color(0.08, 0.08, 0.14, 0.72)
+
+var track_time: float = 0.0
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(500, 540)
-	# Center the lanes around x = size.x / 2
 	update_lane_positions()
 
 func update_lane_positions() -> void:
@@ -49,7 +55,7 @@ func spawn_prompt(beat_val: float, dir: String, for_player: bool) -> void:
 
 	var lane_idx = LANE_DIRS.find(dir)
 	var lx = lane_x_positions[lane_idx] if lane_idx >= 0 else 640.0
-	prompt.position = Vector2(lx - 32.0, SPAWN_Y)
+	prompt.position = Vector2(lx - 34.0, SPAWN_Y)
 	active_prompts.append(prompt)
 
 func clear_all() -> void:
@@ -59,14 +65,14 @@ func clear_all() -> void:
 	active_prompts.clear()
 
 func handle_input_press(dir: String) -> void:
-	trigger_receptor_pulse(dir, 1.25, true)
+	trigger_receptor_pulse(dir, 1.3, true)
+	trigger_receptor_ripple(dir)
 
 	var cur_beat = Conductor.current_beat_float
 	var best_prompt = null
 	var min_abs_ms: float = 999999.0
 	var signed_ms: float = 0.0
 
-	# Search for closest unhit prompt in this direction for player
 	for p in active_prompts:
 		if is_instance_valid(p) and p.is_play_phase and not p.is_hit and not p.is_missed:
 			if p.direction == dir:
@@ -77,14 +83,12 @@ func handle_input_press(dir: String) -> void:
 					signed_ms = offset_ms
 					best_prompt = p
 
-	# Timing windows: Perfect <= 45ms, Good <= 90ms
 	if best_prompt != null and min_abs_ms <= 90.0:
 		var rating = "Perfect" if min_abs_ms <= 45.0 else "Good"
 		best_prompt.pop_hit(rating)
 		hit_judged.emit(rating, signed_ms, dir)
 		Conductor.play_hit(dir)
 	else:
-		# Stray press or wrong lane
 		hit_judged.emit("Stray", 0.0, dir)
 		Conductor.play_hit(dir)
 
@@ -92,17 +96,24 @@ func handle_input_release(dir: String) -> void:
 	receptor_press[dir] = false
 	queue_redraw()
 
-func trigger_receptor_pulse(dir: String, scale_val: float = 1.2, is_pressed: bool = false) -> void:
+func trigger_receptor_pulse(dir: String, scale_val: float = 1.25, is_pressed: bool = false) -> void:
 	receptor_scales[dir] = scale_val
 	receptor_press[dir] = is_pressed
 	var tween = create_tween()
-	tween.tween_property(self, "receptor_scales:" + dir, 1.0, 0.15).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "receptor_scales:" + dir, 1.0, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	queue_redraw()
+
+func trigger_receptor_ripple(dir: String) -> void:
+	ripple_scales[dir] = 1.0
+	ripple_alphas[dir] = 1.0
+	var tween = create_tween()
+	tween.tween_property(self, "ripple_scales:" + dir, 2.2, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(self, "ripple_alphas:" + dir, 0.0, 0.22)
 
 func pulse_beat() -> void:
 	for d in LANE_DIRS:
 		if not receptor_press[d]:
-			trigger_receptor_pulse(d, 1.06, false)
+			trigger_receptor_pulse(d, 1.08, false)
 
 func update_frame(current_beat_float: float) -> void:
 	var to_remove = []
@@ -115,29 +126,26 @@ func update_frame(current_beat_float: float) -> void:
 		if p.is_hit or p.is_missed:
 			continue
 
-		# Scroll math: target_beat lands at JUDGMENT_Y
-		# At (target_beat - APPROACH_BEATS), y = SPAWN_Y
 		var beats_until_target = p.target_beat - current_beat_float
 		var progress = 1.0 - (beats_until_target / APPROACH_BEATS)
 		var current_y = SPAWN_Y + (progress * SCROLL_DISTANCE)
 
 		var lane_idx = LANE_DIRS.find(p.direction)
 		var lx = lane_x_positions[lane_idx] if lane_idx >= 0 else 640.0
-		p.position = Vector2(lx - 32.0, current_y)
+		p.position = Vector2(lx - 34.0, current_y)
 
-		# Listen phase auto-play when prompt arrives at judgment line
 		if not p.is_play_phase:
 			if beats_until_target <= 0.05 and not p.has_played_listen:
 				p.has_played_listen = true
 				if p.direction != "rest":
 					p.pop_hit("Perfect")
-					trigger_receptor_pulse(p.direction, 1.25, false)
+					trigger_receptor_pulse(p.direction, 1.3, false)
+					trigger_receptor_ripple(p.direction)
 					Conductor.play_hit(p.direction)
 					opponent_hit.emit(p.direction)
 				else:
 					p.pop_hit("Perfect")
 		else:
-			# Play phase: check for late miss if expired (> 90ms late)
 			var late_sec = -beats_until_target * Conductor.crotchet
 			if late_sec * 1000.0 > 90.0:
 				if p.direction != "rest":
@@ -145,7 +153,6 @@ func update_frame(current_beat_float: float) -> void:
 					hit_judged.emit("Miss", late_sec * 1000.0, p.direction)
 					Conductor.play_miss()
 				else:
-					# Player successfully ignored rest tile!
 					p.pop_hit("Perfect")
 
 	for r in to_remove:
@@ -153,17 +160,61 @@ func update_frame(current_beat_float: float) -> void:
 
 	queue_redraw()
 
+func _process(delta: float) -> void:
+	track_time += delta
+	queue_redraw()
+
 func _draw() -> void:
-	# 1. Lane track vertical guide lines
+	# 1. Translucent Rhythm Track Highway Backing
+	var hw_x = lane_x_positions[0] - 56.0
+	var hw_w = (lane_x_positions[3] - lane_x_positions[0]) + 112.0
+	var hw_y = SPAWN_Y - 24.0
+	var hw_h = (JUDGMENT_Y - SPAWN_Y) + 74.0
+	var hw_rect = Rect2(hw_x, hw_y, hw_w, hw_h)
+
+	# Highway Drop Shadow
+	draw_rect_rounded(Rect2(hw_rect.position + Vector2(6, 6), hw_rect.size), 18.0, Color(0.06, 0.06, 0.10, 0.45))
+	# Highway Body
+	draw_rect_rounded(hw_rect, 18.0, highway_bg)
+	draw_rect_rounded_outline(hw_rect, 18.0, ink_color, 3.5)
+
+	# 2. Vertical Lane Guide Tracks with Dotted Beat Ticks
 	for i in range(LANE_DIRS.size()):
 		var lx = lane_x_positions[i]
-		var col = LANE_COLORS[LANE_DIRS[i]].lerp(Color("#1B1B2F"), 0.75)
-		draw_line(Vector2(lx, SPAWN_Y - 20), Vector2(lx, JUDGMENT_Y + 40), col, 2.0)
+		var col = LANE_COLORS[LANE_DIRS[i]]
 
-	# 2. Judgment horizontal line
-	draw_line(Vector2(lane_x_positions[0] - 60, JUDGMENT_Y), Vector2(lane_x_positions[3] + 60, JUDGMENT_Y), hero_yellow.lerp(paper_white, 0.4), 3.0)
+		# Lane background strip
+		var lane_strip = Rect2(lx - 42.0, SPAWN_Y - 20, 84.0, (JUDGMENT_Y - SPAWN_Y) + 65.0)
+		var strip_col = col.darkened(0.65)
+		strip_col.a = 0.28
+		draw_rect_rounded(lane_strip, 8.0, strip_col)
 
-	# 3. Receptor targets at judgment line
+		# Center groove guide line
+		var guide_col = col.lerp(paper_white, 0.4)
+		guide_col.a = 0.4
+		draw_line(Vector2(lx, SPAWN_Y - 20), Vector2(lx, JUDGMENT_Y + 45), guide_col, 2.5)
+
+		# Rhythmic beat tick marks moving down the lane
+		for by in range(int(SPAWN_Y), int(JUDGMENT_Y), 38):
+			var tick_offset = fmod(by + (track_time * 60.0), JUDGMENT_Y - SPAWN_Y) + SPAWN_Y
+			var tick_col = col.lerp(paper_white, 0.3)
+			tick_col.a = 0.35
+			draw_line(Vector2(lx - 12, tick_offset), Vector2(lx + 12, tick_offset), tick_col, 1.8)
+
+	# 3. Golden Marquee Judgment Bar Across Receptors
+	var j_start_x = lane_x_positions[0] - 64.0
+	var j_end_x = lane_x_positions[3] + 64.0
+	# Marquee drop shadow
+	draw_line(Vector2(j_start_x, JUDGMENT_Y + 3), Vector2(j_end_x, JUDGMENT_Y + 3), Color(0.1, 0.1, 0.15, 0.4), 4.0)
+	# Marquee glowing bar
+	draw_line(Vector2(j_start_x, JUDGMENT_Y), Vector2(j_end_x, JUDGMENT_Y), hero_yellow, 4.0)
+	draw_line(Vector2(j_start_x, JUDGMENT_Y), Vector2(j_end_x, JUDGMENT_Y), paper_white, 1.5)
+
+	# Marquee Diamond End Caps
+	draw_diamond(Vector2(j_start_x, JUDGMENT_Y), 6.5, hero_yellow, ink_color)
+	draw_diamond(Vector2(j_end_x, JUDGMENT_Y), 6.5, hero_yellow, ink_color)
+
+	# 4. Mechanical Turntable / Rhythm Pad Receptors
 	for i in range(LANE_DIRS.size()):
 		var dir = LANE_DIRS[i]
 		var lx = lane_x_positions[i]
@@ -172,22 +223,52 @@ func _draw() -> void:
 		var is_p = receptor_press.get(dir, false)
 		var base_col = LANE_COLORS[dir]
 
+		# Ripple Shockwave on press
+		var rip_s = ripple_scales.get(dir, 0.0)
+		var rip_a = ripple_alphas.get(dir, 0.0)
+		if rip_a > 0.01:
+			var rip_col = base_col.lightened(0.3)
+			rip_col.a = rip_a
+			draw_arc(center, 34.0 * rip_s, 0, TAU, 28, rip_col, 3.5)
+
 		draw_set_transform(center * (1.0 - s), 0.0, Vector2(s, s))
 
-		# Receptor shadow
-		draw_circle(center + Vector2(3, 3), 32.0, Color(0.1, 0.1, 0.15, 0.3))
+		# Receptor Drop Shadow
+		draw_circle(center + Vector2(4, 5), 34.0, Color(0.1, 0.1, 0.15, 0.35))
 
-		# Receptor body
-		var body_col = base_col.lerp(paper_white, 0.3) if is_p else base_col.lerp(ink_color, 0.5)
-		draw_circle(center, 30.0, body_col)
-		draw_arc(center, 30.0, 0, TAU, 24, ink_color, 3.5)
+		# Outer Rotating Notched Rim (Turntable feel)
+		draw_turntable_rim(center, 34.0, base_col, is_p)
 
-		# Receptor outline arrow
-		draw_arrow_outline(center, dir, paper_white)
+		# Receptor Inner Body
+		var body_col = base_col.lightened(0.2) if is_p else base_col.darkened(0.4)
+		draw_circle(center, 29.0, body_col)
+
+		# Concentric Vinyl Groove Rings
+		draw_arc(center, 23.0, 0, TAU, 22, ink_color.lerp(base_col, 0.3), 1.5)
+		draw_arc(center, 16.0, 0, TAU, 18, ink_color.lerp(base_col, 0.3), 1.5)
+
+		# Inner Bevel Highlight
+		draw_arc(center, 29.0, PI, PI * 1.5, 8, paper_white, 2.0)
+		draw_arc(center, 29.0, 0, TAU, 24, ink_color, 3.2)
+
+		# Receptor Center Arrow Icon
+		var arrow_col = paper_white if not is_p else hero_yellow
+		draw_arrow_symbol(center, dir, arrow_col)
 
 	draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
-func draw_arrow_outline(center: Vector2, dir: String, col: Color) -> void:
+func draw_turntable_rim(center: Vector2, radius: float, base_col: Color, is_pressed: bool) -> void:
+	# Turntable notched rim
+	draw_circle(center, radius, ink_color)
+	var notches = 12
+	var rot = track_time * 2.0
+	for i in range(notches):
+		var a = ((float(i) / float(notches)) * TAU) + rot
+		var p1 = center + Vector2(cos(a), sin(a)) * (radius - 4.0)
+		var p2 = center + Vector2(cos(a), sin(a)) * (radius - 1.0)
+		draw_line(p1, p2, paper_white, 1.8)
+
+func draw_arrow_symbol(center: Vector2, dir: String, col: Color) -> void:
 	var angle = 0.0
 	match dir:
 		"left": angle = PI
@@ -209,5 +290,38 @@ func draw_arrow_outline(center: Vector2, dir: String, col: Color) -> void:
 	for pt in points:
 		rotated_pts.append(center + pt.rotated(angle))
 
-	draw_polyline(rotated_pts + PackedVector2Array([rotated_pts[0]]), col, 2.5)
+	draw_colored_polygon(rotated_pts, col)
+	draw_polyline(rotated_pts + PackedVector2Array([rotated_pts[0]]), ink_color, 2.2)
 
+func draw_diamond(pos: Vector2, r: float, fill_col: Color, out_col: Color) -> void:
+	var pts = PackedVector2Array([
+		pos + Vector2(0, -r),
+		pos + Vector2(r, 0),
+		pos + Vector2(0, r),
+		pos + Vector2(-r, 0)
+	])
+	draw_colored_polygon(pts, fill_col)
+	draw_polyline(pts + PackedVector2Array([pts[0]]), out_col, 2.0)
+
+func draw_rect_rounded(r: Rect2, radius: float, col: Color) -> void:
+	var style = StyleBoxFlat.new()
+	style.corner_radius_top_left = int(radius)
+	style.corner_radius_top_right = int(radius)
+	style.corner_radius_bottom_left = int(radius)
+	style.corner_radius_bottom_right = int(radius)
+	style.bg_color = col
+	style.draw(get_canvas_item(), r)
+
+func draw_rect_rounded_outline(r: Rect2, radius: float, col: Color, width: float) -> void:
+	var style = StyleBoxFlat.new()
+	style.corner_radius_top_left = int(radius)
+	style.corner_radius_top_right = int(radius)
+	style.corner_radius_bottom_left = int(radius)
+	style.corner_radius_bottom_right = int(radius)
+	style.draw_center = false
+	style.border_width_left = int(width)
+	style.border_width_top = int(width)
+	style.border_width_right = int(width)
+	style.border_width_bottom = int(width)
+	style.border_color = col
+	style.draw(get_canvas_item(), r)

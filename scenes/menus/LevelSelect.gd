@@ -7,6 +7,14 @@ var levels_data: Array = []
 
 func _ready() -> void:
 	back_button.pressed.connect(_on_back_pressed)
+	back_button.mouse_entered.connect(func():
+		var tw = create_tween()
+		tw.tween_property(back_button, "scale", Vector2(1.08, 1.08), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	)
+	back_button.mouse_exited.connect(func():
+		var tw = create_tween()
+		tw.tween_property(back_button, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	)
 	load_levels_data()
 	build_level_cards()
 
@@ -30,45 +38,59 @@ func build_level_cards() -> void:
 		var best_score = GameState.get_best_score(lvl_id)
 
 		var card = PanelContainer.new()
-		card.custom_minimum_size = Vector2(250, 420)
+		card.custom_minimum_size = Vector2(260, 440)
+		card.pivot_offset = Vector2(130, 220)
+
+		# Tactile card hover bounce
+		if is_unlocked:
+			card.mouse_entered.connect(func():
+				var tw = create_tween()
+				tw.tween_property(card, "scale", Vector2(1.04, 1.04), 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+				tw.parallel().tween_property(card, "rotation", 0.015, 0.14)
+			)
+			card.mouse_exited.connect(func():
+				var tw = create_tween()
+				tw.tween_property(card, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				tw.parallel().tween_property(card, "rotation", 0.0, 0.14)
+			)
 
 		var style = StyleBoxFlat.new()
-		style.corner_radius_top_left = 12
-		style.corner_radius_top_right = 12
-		style.corner_radius_bottom_left = 12
-		style.corner_radius_bottom_right = 12
+		style.corner_radius_top_left = 16
+		style.corner_radius_top_right = 16
+		style.corner_radius_bottom_left = 16
+		style.corner_radius_bottom_right = 16
 		style.border_width_left = 3
 		style.border_width_top = 3
 		style.border_width_right = 3
 		style.border_width_bottom = 3
 
 		if is_unlocked:
-			style.bg_color = Color("#1F1F35")
+			style.bg_color = Color("#1C1C32")
 			style.border_color = Color("#F7D117") if best_rank in ["S", "A"] else Color("#FFF8E7")
 		else:
-			style.bg_color = Color("#151522")
-			style.border_color = Color("#3A3A4D")
+			style.bg_color = Color("#141420")
+			style.border_color = Color("#38384E")
 
-		style.shadow_color = Color(0, 0, 0, 0.4)
-		style.shadow_size = 6
-		style.shadow_offset = Vector2(3, 4)
+		style.shadow_color = Color(0, 0, 0, 0.45)
+		style.shadow_size = 8
+		style.shadow_offset = Vector2(4, 6)
 		card.add_theme_stylebox_override("panel", style)
 
 		var margin = MarginContainer.new()
-		margin.add_theme_constant_override("margin_left", 16)
-		margin.add_theme_constant_override("margin_top", 16)
-		margin.add_theme_constant_override("margin_right", 16)
-		margin.add_theme_constant_override("margin_bottom", 16)
+		margin.add_theme_constant_override("margin_left", 18)
+		margin.add_theme_constant_override("margin_top", 18)
+		margin.add_theme_constant_override("margin_right", 18)
+		margin.add_theme_constant_override("margin_bottom", 18)
 		card.add_child(margin)
 
 		var vbox = VBoxContainer.new()
 		vbox.add_theme_constant_override("separation", 10)
 		margin.add_child(vbox)
 
-		# Subtitle / District
+		# Subtitle / District Badge
 		var sub_label = Label.new()
-		sub_label.text = lvl.get("subtitle", "District")
-		sub_label.add_theme_font_size_override("font_size", 14)
+		sub_label.text = "★ " + lvl.get("subtitle", "District").to_upper()
+		sub_label.add_theme_font_size_override("font_size", 13)
 		sub_label.add_theme_color_override("font_color", Color("#F7D117") if is_unlocked else Color("#777788"))
 		vbox.add_child(sub_label)
 
@@ -76,20 +98,20 @@ func build_level_cards() -> void:
 		var title_label = Label.new()
 		title_label.text = lvl.get("title", "Level")
 		title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		title_label.add_theme_font_size_override("font_size", 20)
+		title_label.add_theme_font_size_override("font_size", 22)
 		title_label.add_theme_color_override("font_color", Color("#FFF8E7") if is_unlocked else Color("#666677"))
 		vbox.add_child(title_label)
 
-		# Rival
+		# Rival Badge
 		var rival_label = Label.new()
-		rival_label.text = "Rival: " + lvl.get("rival", "")
+		rival_label.text = "VS: " + lvl.get("rival", "")
 		rival_label.add_theme_font_size_override("font_size", 14)
 		rival_label.add_theme_color_override("font_color", Color("#C85A6E") if is_unlocked else Color("#666677"))
 		vbox.add_child(rival_label)
 
 		# Concept Badge
 		var concept_label = Label.new()
-		concept_label.text = "Concept:\n" + lvl.get("concept", "")
+		concept_label.text = "Rhythm Type:\n" + lvl.get("concept", "")
 		concept_label.add_theme_font_size_override("font_size", 13)
 		concept_label.add_theme_color_override("font_color", Color("#4A7DBF") if is_unlocked else Color("#555566"))
 		vbox.add_child(concept_label)
@@ -98,24 +120,35 @@ func build_level_cards() -> void:
 		spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		vbox.add_child(spacer)
 
-		# Rank & Score
+		# Rank Medal / Stamp
 		var rank_label = Label.new()
 		rank_label.text = "RANK: " + best_rank
 		rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		rank_label.add_theme_font_size_override("font_size", 28)
-		rank_label.add_theme_color_override("font_color", Color("#F7D117") if best_rank in ["S", "A"] else Color("#FFF8E7"))
+		rank_label.add_theme_font_size_override("font_size", 30)
+
+		var rank_color = Color("#FFF8E7")
+		match best_rank:
+			"S": rank_color = Color("#FFD000")
+			"A": rank_color = Color("#38B000")
+			"B": rank_color = Color("#4A7DBF")
+			"C": rank_color = Color("#D17B4A")
+			_: rank_color = Color("#777788")
+
+		rank_label.add_theme_color_override("font_color", rank_color)
 		vbox.add_child(rank_label)
 
 		var score_label = Label.new()
 		score_label.text = "BEST: %d" % best_score
 		score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		score_label.add_theme_font_size_override("font_size", 13)
-		score_label.add_theme_color_override("font_color", Color("#FFF8E7").lerp(Color("#1B1B2F"), 0.3))
+		score_label.add_theme_color_override("font_color", Color("#FFF8E7").lerp(Color("#1B1B2F"), 0.35))
 		vbox.add_child(score_label)
 
 		# Play / Locked Button
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(0, 44)
+		btn.custom_minimum_size = Vector2(0, 46)
+		btn.pivot_offset = Vector2(110, 23)
+
 		if is_unlocked:
 			btn.text = "PLAY STAGE"
 			var normal_style = StyleBoxFlat.new()
@@ -125,12 +158,12 @@ func build_level_cards() -> void:
 			normal_style.border_width_top = 3
 			normal_style.border_width_right = 3
 			normal_style.border_width_bottom = 3
-			normal_style.corner_radius_top_left = 8
-			normal_style.corner_radius_top_right = 8
-			normal_style.corner_radius_bottom_right = 8
-			normal_style.corner_radius_bottom_left = 8
-			normal_style.shadow_color = Color(0.1, 0.1, 0.18, 0.4)
-			normal_style.shadow_size = 4
+			normal_style.corner_radius_top_left = 10
+			normal_style.corner_radius_top_right = 10
+			normal_style.corner_radius_bottom_right = 10
+			normal_style.corner_radius_bottom_left = 10
+			normal_style.shadow_color = Color(0.1, 0.1, 0.18, 0.45)
+			normal_style.shadow_size = 5
 			normal_style.shadow_offset = Vector2(2, 3)
 
 			var hover_style = normal_style.duplicate()
@@ -150,22 +183,31 @@ func build_level_cards() -> void:
 			btn.add_theme_color_override("font_focus_color", Color("#1B1B2F"))
 			btn.add_theme_font_size_override("font_size", 16)
 			btn.pressed.connect(func(): _start_level(lvl_id))
+
+			btn.mouse_entered.connect(func():
+				var tw = create_tween()
+				tw.tween_property(btn, "scale", Vector2(1.06, 1.06), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			)
+			btn.mouse_exited.connect(func():
+				var tw = create_tween()
+				tw.tween_property(btn, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			)
 		else:
 			btn.text = "LOCKED"
 			btn.disabled = true
 			var dis_style = StyleBoxFlat.new()
-			dis_style.bg_color = Color("#262638")
-			dis_style.border_color = Color("#44445A")
+			dis_style.bg_color = Color("#242436")
+			dis_style.border_color = Color("#404054")
 			dis_style.border_width_left = 2
 			dis_style.border_width_top = 2
 			dis_style.border_width_right = 2
 			dis_style.border_width_bottom = 2
-			dis_style.corner_radius_top_left = 8
-			dis_style.corner_radius_top_right = 8
-			dis_style.corner_radius_bottom_right = 8
-			dis_style.corner_radius_bottom_left = 8
+			dis_style.corner_radius_top_left = 10
+			dis_style.corner_radius_top_right = 10
+			dis_style.corner_radius_bottom_right = 10
+			dis_style.corner_radius_bottom_left = 10
 			btn.add_theme_stylebox_override("disabled", dis_style)
-			btn.add_theme_color_override("font_disabled_color", Color("#888899"))
+			btn.add_theme_color_override("font_disabled_color", Color("#777788"))
 			btn.add_theme_font_size_override("font_size", 15)
 
 			var tip = Label.new()
@@ -173,7 +215,7 @@ func build_level_cards() -> void:
 			tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			tip.add_theme_font_size_override("font_size", 11)
-			tip.add_theme_color_override("font_color", Color("#888899"))
+			tip.add_theme_color_override("font_color", Color("#777788"))
 			vbox.add_child(tip)
 
 		vbox.add_child(btn)
